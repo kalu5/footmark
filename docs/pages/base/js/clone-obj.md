@@ -91,10 +91,10 @@ console.log (bar) // { name: 'bar', age: 18 }
 ## 浅克隆/浅拷贝
 
 ``` ts
-function shallowCloning (origin, target) {
-  // 新定义了一个对象，指向新的引用
+function shallowCloning (origin: Recordable, target?: Recordable) {
   const tar = target || {}
   for (let key in origin) {
+    // 剔除原型上的方法和属性
     if (origin.hasOwnProperty(key)) {
       tar[key] = origin[key]
     }
@@ -132,30 +132,31 @@ console.log (foo) // { name: 'foo', child: { name: 'fooSon' } }
 ## 深克隆/深拷贝
 
 ``` ts
-function isObject<T> (obj: T): boolean {
-  return typeof obj === 'object' && obj !== null
+function isObject<T>(obj: T): boolean {
+  return typeof obj === 'object' && obj !== null;
 }
 
-function isArray<T extends object> (obj: T): boolean {
-  const toString = Object.prototype.toString;
-  return toString.call(obj) === 'object Array'
+function isArray<T extends object> (obj: T) {
+  return Object.prototype.toString.call(obj) === '[object Array]'
 }
 
-function deepCloning (origin, target) {
-  const tart = target || {};
-  for (let key in origin)  {
-    // 剔除原型上的方法和属性
+function deepCloning (origin: Recordable, target?: Recordable) {
+  const tar = target || {};
+
+  for (let key in origin) {
     if (origin.hasOwnProperty(key)) {
-      // 判断当前的value是否为引用值
-      const val = origin[key]
-      if (isObject(val)) {
-        target[key] = isArray(val) ? [] : {}
-        deepCloning(val, target[key])
+      const value = origin[key]
+      // 是否为对象
+      if (isObject(value)) {
+        tar[key] = isArray(value) ? [] : {}
+        deepCloning(value, tar[key])
       } else {
-        target[key] = val;
+        tar[key] = value
       }
     }
   }
+
+  return tar
 }
 ```
 
