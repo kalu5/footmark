@@ -31,5 +31,5 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/kalu5' }
     ]
   },
-  base: '/kalu5/'
+  base: '/footmark/'
 })
