@@ -172,6 +172,47 @@ console.log (foo) // { name: 'foo', child: { name: 'fooChild' } }
 
 :tada: 大功告成！！！小明同学终于可以安心的玩耍了。
 
+## :rightwards_hand: 拓展：
+
+### Js中哪些方法是浅拷贝
+
+1. `Object.assign(target, origin)`
+
+2. 拓展运算符 ...
+
+``` ts
+const foo = { name: 'foo' }
+const bar = Object.assign({}, foo)
+const baz = {...foo}
+
+bar.name = 'bar'
+baz.name = 'baz'
+console.log (foo.name) // foo
+console.log (bar.name) // bar
+console.log (baz.name) // baz
+```
+
+3. `Array.concat()`
+4. `Array.slice()`
+
+``` ts
+const foo = ['foo', 'bar']
+const bar = foo.concat()
+const baz = foo.slice()
+bar[0] = 'bar'
+baz[0] = 'baz'
+console.log (bar[0]) // 'bar'
+console.log (baz[0]) // 'baz'
+```
+
+### 实现深拷贝的方法
+
+1. `JSON.parse(JSON.strgify(obj))`
+
+2. 递归封装
+
+3. lodash.cloneDeep
+
 
 
 
