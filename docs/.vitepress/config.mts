@@ -25,8 +25,13 @@ export default defineConfig({
             {
               text: '对象克隆',
               link: '/pages/base/js/clone-obj'
+            },
+            {
+              text: '数组遍历',
+              link: '/pages/base/js/arr-traversal'
             }
           ] },
+          { text: 'Css世界', link: '/pages/base/css/index' },
           { text: 'Vue设计与原理', link: '/pages/base/vue/index' },
           { text: 'React原理', link: '/pages/base/react/index' }
         ]
