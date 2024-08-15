@@ -23,6 +23,10 @@ export default defineConfig({
         items: [
           { text: '你不知道的Javascript', items: [
             {
+              text: '重学Javascript',
+              link: '/pages/base/js/js-deep'
+            },
+            {
               text: '对象克隆',
               link: '/pages/base/js/clone-obj'
             },
@@ -30,6 +34,12 @@ export default defineConfig({
               text: '数组遍历',
               link: '/pages/base/js/arr-traversal'
             }
+          ] },
+          { text: 'NodeJs', items: [
+            {
+              text: 'MiniExpress',
+              link: '/pages/base/node/mini-express'
+            },
           ] },
           { text: 'Css世界', link: '/pages/base/css/index' },
           { text: 'Vue设计与原理', link: '/pages/base/vue/index' },
