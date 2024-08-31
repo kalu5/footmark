@@ -975,7 +975,7 @@ function fb (n) {
 }
 ```
 
-#### 预编译
+#### :pink_heart:预编译
 
 ##### JS执行流程
 
@@ -1366,13 +1366,191 @@ console.log (a) // 1
 console.log (f) // 5
 ```
 
+#### :hibiscus:::o::o::o:作用域和作用域链
+
+函数：也是一种对象（引用）类型，有自己的属性（test.name/test.length/test.prototype）,在对象中有些属性是我们无法访问的，JS引擎内部固有的隐式属性，比如[[scope]]
+
+[[scope]]: 
+1. 是函数创建时，生成的一个JS内部的隐式属性
+2. 是函数存储作用域链的容器
+   作用域链中存有AO/GO
+   AO是一个即时的存储容器，函数执行完成后，销毁AO
 
 
+**作用域与作用域链**
+
+1. 全局执行的前一刻创建GO
+2. 全局执行时函数被定义，此时函数的环境是上级的环境
+3. 函数执行创建AO放在作用域链的顶端（第0位）
+   此时查找变量就是从作用域顶端开始往下查找
+
+4. 函数执行完成后销毁AO, 环境恢复到被定义时
+
+**图例：**
+
+1. 全局执行，a函数被定义
+![a](/public/imgs/scope-1.png) 
+
+2. 函数a执行前一刻
+
+![a](/public/imgs/scope-2.png) 
+
+3. 函数b定义
+![b](/public/imgs/scope-3.png) 
+
+4. 函数b执行前一刻
+![b](/public/imgs/scope-4.png) 
+
+5. 函数b执行完
+![b](/public/imgs/scope-5.png) 
+
+6. 函数a执行完
+![a](/public/imgs/scope-6.png) 
 
 
+:::tip
+函数外部访问不到函数内部的变量，查找变量是从作用域链的顶端开始往下查找，当前函数的作用域链中没有内部函数的作用AO
+:::
 
+**手动分析作用域与作用域链**
+``` js
+function a () {
+   function b() {
+      var c = 2
+   }
+   b()
+}
+a()
+```
+1. 全局执行前创建GO 
+``` js
+GO = {
+   a: function a() {}
+}
+```
+2. 全局执行，a函数被定义，创建a的作用域a.[[scope]], 存的是上级的作用域
+``` js
+a.[[scope]] = [
+   // GO
+   { a: function a() {} }
+]
+```
+3. a函数执行前，创建a的AO,放在作用域顶端
+``` js
+a.[[scope]] = [
+   // a -> AO
+   { b: function b() {} }
+   // GO
+   { a: function a() {} }
+   
+]
+```
+4. a函数执行，b被定义，创建b的作用域b.[[scope]], 存的是上级的作用域
+```js
+b.[[scope]] = {
+   // a -> AO
+   { b: function b() {} }
+   // GO
+   { a: function a() {} }
+   
+}
+```
+5. b函数执行，创建b的AO,放在作用域顶端
+```js
+b.[[scope]] = {
+   // b -> AO
+   { c: 2 }
+    // a -> AO
+   { b: function b() {} }
+   // GO
+   { a: function a() {} }
+}
+```
+6. b函数执行完，销毁b的AO
+```js
+b.[[scope]] = {
+   // a -> AO
+   { b: function b() {} }
+   // GO
+   { a: function a() {} }
+   
+}
+```
 
+7. a函数执行完，销毁a的AO, 此时b的scope也被删除
+``` js
+a.[[scope]] = [
+   // GO
+   { a: function a() {} }
+]
+```
 
+#### :sunflower:::o::o::o:闭包
 
+1. 全局执行，test1函数被定义
+![test1](/public/imgs/closure-1.png) 
 
+2. test1函数执行前，test2被定义
+![test1](/public/imgs/closure-2.png) 
 
+3. test1函数执行结束后，原本AO要销毁，但返回了test2到外部，此时test2的作用域链中存有test1的AO，所以test1的AO未销毁
+![test1](/public/imgs/closure-3.png) 
+
+4. test3函数执行，test2的作用域链中增加自己的AO
+![test1](/public/imgs/closure-4.png) 
+
+5. test3函数执行完成，test2的AO被销毁，但test1的AO任然存在
+![test1](/public/imgs/closure-5.png)
+
+**:runner::o::o::o:闭包定义：**
+
+当内部函数被返回到外部函数并保存时，一定会产生闭包，闭包会产生原来的作用域链不释放，大量的闭包可能会导致内存泄漏或加载过慢
+
+**闭包的基本使用：**
+
+1. 变量存储
+``` js
+function breadManager(initNum) {
+   var breadNum = initNum || 10
+
+   function supplyBread() {
+      breadNum += 10
+      console.log (breadNum)
+   }
+
+   function saleBread() {
+      breadNum --
+      console.log (breadNum)
+   }
+
+   return [supplyBread, saleBread]
+}
+
+var breadStore = breadManager()
+breadStore[0]() // 20
+breadStore[1]() // 19
+```
+``` js
+function breadManager(initNum) {
+   var breadNum = initNum || 10
+
+   function supplyBread() {
+      breadNum += 10
+      console.log (breadNum)
+   }
+
+   function saleBread() {
+      breadNum --
+      console.log (breadNum)
+   }
+
+   return {
+      supplyBread,
+      saleBread
+   }
+}
+
+var breadStore = breadManager()
+breadStore.supplyBread() // 20
+breadStore.saleBread() // 19
+```
