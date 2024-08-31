@@ -301,6 +301,17 @@ e = --a + a++
 console.log (b, a) // 8 5
 ```
 
+**逗号运算，始终会返回逗号后面的值**
+
+``` js
+var test = (6, 5)
+console.log (test) // 5
+
+
+var test1 = (9+2, 11 -3, 9 + 9)
+console.log (test1) // 18
+```
+
 ##### 比较运算
 
 \> <  >= <= == === != !===
@@ -1554,3 +1565,128 @@ var breadStore = breadManager()
 breadStore.supplyBread() // 20
 breadStore.saleBread() // 19
 ```
+
+#### 自执行函数（立即执行函数/初始化函数）
+
+**特点：**
+1. 自动执行
+2. 执行完以后立即释放(普通函数执行完成全局GO不会自动释放，常用于页面加载完成后初始化)
+
+``` js
+// w3c推荐的使用方式
+(function() {
+   console.log ('test')
+}())
+
+// 日常使用的方式
+(function() {
+   console.log ('test1')
+})()
+```
+
+自执行函数也能传递参数和返回特定值，但函数名自动忽略（本质是表达式执行完被销毁了）
+``` js
+var test = (function test1(a, b){
+   return a + b
+}(2, 3))
+console.log (test) // 5
+```
+
+**一定是表达式才能被执行符号执行，被括号包裹的一定是表达式**
+
+```js
+// 报错
+function test() {
+
+}() // 语法错误
+
+
+// 正常打印
+var test = function () {
+   console.log ('test')
+}()
+
+(function(){
+   console.log ('test')
+})()
+```
+**将函数声明变成表达式就能自动执行，并且会忽略函数名**
+
+将函数声明变成表达式的方法，在函数前加 + - ！|| &&
+
+``` js
++ function test() {
+   console.log ('test')
+}() // test
+
+```
+
+**示例：**
+
+1. 函数后紧跟表达式不会报错
+``` js
+function test() {
+   console.log ('test')
+}(6) // 不会报错，js引擎将(6)解析为表达式，函数后面是表达式，所以不报错，但函数不执行
+```
+
+2. 打印0-9， 由于产生了闭包，导致打印了10个10，解决方式用立即执行函数
+``` js
+function test() {
+   var arr = []
+   for (var i = 0; i < 10;i++) {
+      arr[i] = function () {
+         console.log (i)
+      }
+   }
+   return arr
+}
+
+var test1 = test()
+
+for(var i = 0 ; i<test1.length; i++) {
+   test1[i]() // 10个10
+}
+
+// 解决方法
+function test1 () {
+   var arr = []
+   for (var i = 0; i<10; i++) {
+      // 立即执行，每次i都不同
+      (function(j){
+         arr[j] = function () {
+            console.log (j)
+         }
+      }(i))
+   }
+   return arr
+}
+```
+
+3. 逗号运算
+
+``` js
+var fn = (function test1() {
+   return 1
+}, function test2() {
+   return '2'
+})()
+
+console.log (typeof fn) // string
+
+```
+
+4. 表达式自动忽略函数名
+``` js
+var a = 10
+/**
+ * function b() {} 为true,进入if
+ * typeof b 为undefined, 此时(function b() {})为表达式自动忽略函数名b
+ */
+if (function b() {}) {
+   a+= typeof b
+}
+console.log (a) // 10undefined
+
+```
+
