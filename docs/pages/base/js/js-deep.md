@@ -1690,3 +1690,587 @@ console.log (a) // 10undefined
 
 ```
 
+**示例：**
+1. 累加器
+
+``` js
+function test() {
+   var num  = 0;
+   return function () {
+      console.log (++num)
+   }
+}
+var add = test()
+add() // 1
+add() // 2
+
+```
+
+2. 学生管理
+``` js
+function myClass() {
+   var students = []
+
+   var operations = {
+      join: function (name) {
+         students.push(name)
+         console.log (students)
+      },
+      leave: function (name) {
+         for(var i = 0; i < students.length;i++) {
+            var item = students[i]
+            if (item === name) {
+               students.splice(i, 1)
+            }
+         }
+         console.log (students)
+      },
+      leaveIndex: function (name) {
+         var idx = students.indexOf(name)
+         if (idx !== -1) {
+            students.splice(idx, 1)
+         }
+      }
+   }
+
+   return operations;
+}
+
+var operation = myClass()
+operation.join('test1')
+operation.join('test2')
+operation.join('test3')
+operation.leave('test2')
+operation.leaveIndex('test1')
+```
+
+#### 对象
+
+删除对象的属性或方法`delete obj.name`
+
+对象方法中获取自己用this
+
+**创建对象的方式**
+
+1. 对象字面量
+
+``` js
+var obj = {
+   name: 'obj'
+}
+```
+
+2. 系统自带的构造函数(和对象字面量一样)实例化对象
+
+``` js
+var obj = new Object()
+obj.name = 'obj1'
+```
+
+3. 自定义构造函数实例化对象
+
+通过构造函数每次构造出来的实例都是一个新的对象，修改后不影响其他实例
+
+``` js
+function Teacher(opt) {
+   this.name = opt.name
+   this.play = function () {
+      console.log ('play')
+   }
+}
+
+var teacher = new Teacher({name: 'test'})
+
+```
+
+#### 构造函数
+
+构造函数没有实例化之前，this指向window, 实例化后指向实例对象
+
+``` js
+function Car () {
+   console.log (this)
+}
+
+var car1 = new Car()
+
+```
+
+#### new做了什么
+
+1. 隐式的创建this
+2. 隐式的返回this
+3. 改变this指向为实例化对象
+
+``` js
+/**
+ * GO = {
+ *   Car: (function)
+ *   car1: {
+ *     color: 'red',
+ *     brand: 'benz'
+ *   }
+ * }
+ * 
+ * AO = {
+ *   this: {
+ *     color: 'red',
+ *     brand: 'benz'
+ *   }
+ * }
+ * 
+*/
+function Car (color, brand) {
+   /**
+    * this = {
+    *   color: red,
+    *   brand: benz
+    * }
+   */
+   this.color = color
+   this.brand = brand
+
+   // return this
+}
+
+var car1 = new Car('red', 'Benz')
+
+
+// 普通函数实现构造函数
+function test() {
+   var obj = {
+      color: 'red'
+   }
+   return obj;
+}
+
+var test1 = test()
+console.log (test1.color) // 'red'
+```
+
+#### 构造函数可以手动返回值
+
+返回普通值没有作用
+返回对象类型({}/[]/function)会覆盖默认返回的this
+
+
+### 包装类
+
+原始值没有自己的方法和属性
+
+将原始值传给内置的方法会生成实例
+
+new Number / new String / new Boolean
+
+``` js
+var a = 1
+console.log (a) // 1
+var aa = new Number(1)
+console.log (aa) // Number{[[PrimitiveValue]]: 1}
+
+aa.name = 'aa'
+var bb = aa + 1
+console.log (bb) // 2
+
+
+// String
+var c = new String('cc')
+
+c.name = 'cc'
+
+var d = c + 'dd' // ccdd
+```
+
+**示例：**
+1. 
+``` js
+var a = 123
+a.len = 3
+// new Number(a).len = 3
+// 找不到存储的地方，delete
+console.log (a.len) // undefined
+
+// 解决方法
+var a = new Number(123)
+```
+
+2. 为什么字符串可以访问length
+
+``` js
+var str = 'str'
+console.log (str.length) // 3
+
+// 原理是使用了包装类 new String默认有length属性
+new String(str).length
+
+```
+
+3. 字符出不能通过length截断， 数组可以
+
+``` js
+var arr = [1, 2, 3]
+arr.length = 2
+console.log (arr) // [1, 2]
+
+// string
+var str = 'str'
+str.length = 1
+// new String().length  = 1
+// delete
+
+// new String(str)
+console.log (str) // str
+
+
+```
+
+4. 
+``` js
+var name = 'lan'
+name += 10
+var type = typeof(name)
+if (type.length === 6) {
+   type.text = 'string'
+   // new String().text = 'string'
+   // delete
+}
+console.log (type.text) // undefined
+
+// 一定能输出string
+var type = new String(typeof(name))
+```
+
+5.
+``` js
+function Test(a, b, c) {
+   var d = 1
+   this.a = a
+   this.b = b
+   this.c = c
+   function f() {
+      d++
+      console.log (d)
+   }
+   this.g = f
+
+   // return this 隐式返回this形成闭包
+}
+var test1 = new Test()
+test1.g() // 2
+test1.g() // 3
+var test2 = new Test()
+test2.g() // 2
+
+```
+
+6.
+``` js
+var x = 1,
+    y = z = 0;
+function add(n) {
+   return n = n + 1
+}
+
+y = add(x)
+function add(n) {
+   // n = 1 + 3
+   // n =4
+   // return n
+   return n = n + 3
+}
+z = add(x)
+console.log (x, y, z)// 1 ,4, 4
+/**
+ * GO = {
+ *   x: undefined -> 1
+ *   y: undefined -> 0 -> 4
+ *   z: undefined -> 0 -> 4
+ *   add: undefined -> function {return n = n+3}
+ * }
+ * AO = {
+ *   n: undefined -> 1 ->  4 
+ * }
+ * 
+*/
+```
+
+7. 
+```js
+function foo1(x) {
+   console.log (arguments)
+   return x
+}
+foo1(1, 2, 3) // 123
+
+function foo2(x){
+  console.log (arguments)
+  return x
+}(1, 2, 3)
+
+(function foo3(x){
+  console.log (arguments)
+  return x
+}(1, 2, 3))// 123
+```
+
+8.
+```js
+function b(x, y,a) {
+   a = 10
+   // 形参和实参是映射关系，可以修改
+   console.log (arguments[2]) // 10
+
+   arguments[2] = 20
+   console.log (arguments[2]) // 20
+}
+b(1, 2, 3)
+```
+
+9. UNICODE码涵盖ASCII码，0-255每个都是1个字节，超出是2个字节
+ASCII码表1 0 -127， 表二128-255
+
+获取字符在UNICODE码中的位置
+``` js
+var str = 'a'
+var pos = str.charCodeAt(0)
+console.log (pos) // 97
+```
+
+10. 写一个函数，接受任意字符串，算出这个字符串的总字节数
+
+``` js
+function getBytes (str) {
+   var bytes = 0;
+   for (var i = 0 ;i <str.length; i++) {
+      var pos = str.charCodeAt(i)
+      if (pos <= 255) {
+         bytes ++
+      } else {
+         bytes += 2
+      }
+   }
+   return bytes
+}
+
+```
+``` js
+function getBytes (str) {
+   var bytes = str.length;
+   for (var i = 0 ;i <str.length; i++) {
+      var pos = str.charCodeAt(i)
+      if (pos > 255) {
+         bytes ++
+      }
+   }
+   return bytes
+}
+
+```
+
+### 原型
+
+原型prototype其实是function对象下的一个属性，打印结果也是对象
+
+
+在构造函数中，原型是定义构造函数构造出来得每个对象得公共祖先，所有被该构造函数构造出得对象都能继承原型上的属性和方法
+
+**原型的作用：**
+所有在构造函数中固定的属性或方法（每个方法都是一样的）都应该写在原型上（写在构造函数上实例化时,代码耦合）, 属性配置项写在构造函数中
+
+``` JS
+function HandPhone(opt) {
+   this.color = opt.color;
+   this.brand = opt.brand;
+   // 一下固定的属性应该写在原型上
+   this.screen = '18: 9';
+   this.system = 'Andriod';
+}
+
+HandPhone.prototype.rom = '64G'
+HandPhone.prototype.ram = '6G'
+HandPhone.prototype.screen = '18:9'
+HandPhone.prototype.system = 'Andriod'
+HandPhone.prototype.showPhone = function () {
+   console.log (`I have a ${this.color}${this.brand}`)
+}
+
+HandPhone.prototype = {
+   rom: '64G',
+   ram: '6G',
+   screen: '18:9',
+   system: 'ios',
+   showPhone: function () {
+      console.log (`I have a ${this.color}${this.brand}`)
+   }
+}
+
+var hp1 = new HandPhone({
+   color: 'red',
+   brand: 'xiaomi'
+})
+
+var hp2 = new HandPhone({
+   color: 'blank',
+   brand: 'hua wei'
+})
+
+console.log (hp1.rom) // 64g
+console.log (hp2.ram) // 6g
+```
+
+通过构造出来的实例去新增、删除、修改原型是不行的
+
+**原型上的构造器指向构造函数本身，可以通过原型更改**
+``` js
+function TelePhone() {}
+HandPhone.prototype = {
+   constructor: TeltePhone
+}
+```
+
+**原型是属于实例对象，实例化后才有**
+``` js
+function Car(name) {
+   var this = {
+      name: 'cars'
+      __proto__: Car.prototype
+   }
+
+   this.name = name
+}
+
+Car.prototype = {
+   name: 'car'
+}
+
+const car = new Car('cars')
+console.log (car.name) // 'cars'
+
+```
+
+**实例的原型（__proto__）是可以修改的**
+``` js
+function Car () {}
+Car.prototype = {
+   name: 'car'
+}
+
+var p1 = {
+   name: 'car1'
+}
+
+var car = new Car()
+console.log (car.name) // car
+
+car.__proto__ = p1
+console.log (car.name) // car1
+
+```
+
+**例子：**
+``` js
+Car.prototype.name = 'Benz'
+function Car () {}
+Car.prototype.name = 'BWM'
+var car = new Car()
+console.log (car.name) // 'MWM'
+```
+
+``` js
+Car.prototype.name = 'Benz'
+function Car () {}
+
+var car = new Car()
+Car.prototype.name = 'BWM'
+console.log (car.name) // 'MWM'
+```
+
+``` js
+Car.prototype.name = 'Benz'
+function Car () {}
+
+var car = new Car()
+Car.prototype = {
+   name: 'BWM'
+}
+
+console.log (car.name) // 'Benz'
+console.log (car) // {}
+```
+
+``` js
+Car.prototype.name = 'Benz'
+function Car () {}
+Car.prototype = {
+   name: 'BWM'
+}
+var car = new Car()
+
+console.log (car.name) // 'BWM'
+
+// car.prototype.constructor -> Car() -> prototype -> name: 'Benz'
+```
+
+#### JS插件
+
+window 和 return
+
+``` js
+function test () {
+   var a = 1
+   function add () {
+      a++
+      console.log (a)
+   }
+   return add
+}
+
+var add = test()
+add() // 2
+add() // 3
+```
+
+``` js
+function test () {
+   var a = 1
+   function add () {
+      a++
+      console.log (a)
+   }
+   window.add = add
+}
+
+add() // 2
+add() // 3
+```
+
+``` js
+(function test () {
+   var a = 1
+   function add () {
+      a++
+      console.log (a)
+   }
+   window.add = add
+})()
+
+add() // 2
+add() // 3
+```
+
+插件的写法：
+``` js
+;(function () {
+   function Car () {
+
+   }
+
+   Car.prototype = {
+
+   }
+
+   window.Car = Car
+})()
+
+var car = new Car();
+```
