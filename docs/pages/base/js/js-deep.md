@@ -2,7 +2,7 @@
 
 ## 浏览器
 
-### 五大主流浏览器 内核
+## 五大主流浏览器 内核
               
 1. IE          trident
 2. Chrome      webkit blink
@@ -10,7 +10,7 @@
 4. Firfox      gecko
 5. Opera       presto
 
-### 浏览器的历史和Js的诞生
+## 浏览器的历史和Js的诞生
 
 1. 1990年，蒂姆伯纳斯.李（超文本分享咨询的人）开发了一个world wide web ,后面移植到C后产生第一个浏览器libwww/nexus, 只允许别人浏览他人编写的网站
 
@@ -65,7 +65,7 @@
 3. BOM: browser object model  没有规范
 
 
-### 线程
+## 线程
 
 单线程：同一时间，只能运行一个程序
 多线程：同时可以运行多个程序
@@ -83,9 +83,9 @@
 
 切分后中间的时间间隔很短，看不到卡顿。
 
-### :pink_heart:ECMAScript
+## :pink_heart:ECMAScript
 
-#### 变量
+## 变量
 
 存储数据的容器，由两部分组成; 声明变量，变量赋值
 
@@ -113,7 +113,7 @@ var z = x + y;
 console.log(z)
 ```
 
-#### 数据类型
+## 数据类型
 
 1. 原始值
 
@@ -194,7 +194,7 @@ console.log (arr1, arr2) // [1, 2]  [1, 2, 3, 4]
 
 
 
-#### 基本语法
+## 基本语法
 1. 语句以分号结尾，除for/if/ 单一声明多个变量
 ``` js
 var a = 1;
@@ -210,9 +210,9 @@ console.log (a) // ReferenceError a is not defined
 console.log ('test')
 ```
 
-#### 运算
+## 运算
 
-##### 普通运算
+#### 普通运算
 
 + - * / % () ++ --
 
@@ -312,7 +312,7 @@ var test1 = (9+2, 11 -3, 9 + 9)
 console.log (test1) // 18
 ```
 
-##### 比较运算
+#### 比较运算
 
 \> <  >= <= == === != !===
 
@@ -335,7 +335,7 @@ console.log (1 === '1') // false
 console.log (NaN == NaN) // false
 ```
 
-#### 条件语句
+## 条件语句
 
 if / else / else if / switch 
 
@@ -384,7 +384,7 @@ switch(city) {
 一般来说值是有范围的或者条件是多个的用if, 定值有多个用switch
 :::
 
-##### 逻辑运算
+#### 逻辑运算
 
 与 && 或|| 非！
 
@@ -413,7 +413,7 @@ var a = 0 || null || 1 || 0 // 1
 var a = !1 // false
 ```
 
-#### 循环
+## 循环
 
 for / while / do while
 
@@ -564,7 +564,7 @@ do {
 } while(false)
 ```
 
-#### 引用值
+## 引用值
 
 1. array
 
@@ -611,7 +611,7 @@ console.log (typeof(typeof(1))) // string
 typeof()返回的是string, 数据类型再typeof返回都是string
 :::
 
-#### 显示类型转换 与 隐式类型转换
+## 显示类型转换 与 隐式类型转换
 
 **显示类型转换**
 
@@ -788,7 +788,7 @@ console.log (!!' ' + !!'' - !!false || '未通过')
 
 ```
 
-#### 函数：函数式编程
+## 函数：函数式编程
 
 **高内聚，低耦合：模块的单一责任制**
 
@@ -942,7 +942,7 @@ console.log (b) // 报错
 总结：函数就是一个固定的功能或者是程序段被封装的过程，实现一个固定功能或者程序，在这个封装体中需要一个入口（参数）和一个出口（返回）
 :::
 
-##### 递归
+#### 递归
 
 找规律，找出口
 
@@ -986,9 +986,9 @@ function fb (n) {
 }
 ```
 
-#### :pink_heart:预编译
+## :pink_heart:预编译
 
-##### JS执行流程
+#### JS执行流程
 
 1. 通篇的检查语法错误
 
@@ -997,7 +997,7 @@ function fb (n) {
 2. 解释一行执行一行
 
 
-##### 变量和函数声明现象
+#### 变量和函数声明现象
 
 函数声明整体提升，变量只有声明提升，赋值不提升
 
@@ -1025,7 +1025,7 @@ var a = 1;
 
 ```
 
-##### 暗示全局变量 imply global variable
+#### 暗示全局变量 imply global variable
 
 变量未声明就赋值就是暗示全局变量的现象
 在函数内未声明直接赋值挂载到全局变量上
@@ -1061,7 +1061,7 @@ console.log (window.b) // 1
 
 ```
 
-##### 函数预编译：函数执行之前进行的步骤，创建函数上下文 AO: activation object
+#### 函数预编译：函数执行之前进行的步骤，创建函数上下文 AO: activation object
 
 预编译做过的事情，执行时就不做了
 
@@ -1131,7 +1131,7 @@ test1 (1)
 
 ```
 
-##### 全局预编译：全局上下文GO: global object
+#### 全局预编译：全局上下文GO: global object
 
 GO === window
 
@@ -1174,7 +1174,7 @@ function c() {}
 var d = function () {}
 ```
 
-##### 全局和函数
+#### 全局和函数
 
 ``` js
 
@@ -1377,7 +1377,7 @@ console.log (a) // 1
 console.log (f) // 5
 ```
 
-#### :hibiscus:::o::o::o:作用域和作用域链
+## :hibiscus:::o::o::o:作用域和作用域链
 
 函数：也是一种对象（引用）类型，有自己的属性（test.name/test.length/test.prototype）,在对象中有些属性是我们无法访问的，JS引擎内部固有的隐式属性，比如[[scope]]
 
@@ -1496,7 +1496,7 @@ a.[[scope]] = [
 ]
 ```
 
-#### :sunflower:::o::o::o:闭包
+## :sunflower:::o::o::o:闭包
 
 1. 全局执行，test1函数被定义
 ![test1](/public/imgs/closure-1.png) 
@@ -1566,7 +1566,7 @@ breadStore.supplyBread() // 20
 breadStore.saleBread() // 19
 ```
 
-#### 自执行函数（立即执行函数/初始化函数）
+## 自执行函数（立即执行函数/初始化函数）
 
 **特点：**
 1. 自动执行
@@ -1744,7 +1744,7 @@ operation.leave('test2')
 operation.leaveIndex('test1')
 ```
 
-#### 对象
+## 对象
 
 删除对象的属性或方法`delete obj.name`
 
@@ -1783,7 +1783,7 @@ var teacher = new Teacher({name: 'test'})
 
 ```
 
-#### 构造函数
+## 构造函数
 
 构造函数没有实例化之前，this指向window, 实例化后指向实例对象
 
@@ -1796,7 +1796,7 @@ var car1 = new Car()
 
 ```
 
-#### new做了什么
+## new做了什么
 
 1. 隐式的创建this
 2. 隐式的返回this
@@ -1848,13 +1848,13 @@ var test1 = test()
 console.log (test1.color) // 'red'
 ```
 
-#### 构造函数可以手动返回值
+## 构造函数可以手动返回值
 
 返回普通值没有作用
 返回对象类型({}/[]/function)会覆盖默认返回的this
 
 
-### 包装类
+## 包装类
 
 原始值没有自己的方法和属性
 
@@ -2067,7 +2067,7 @@ function getBytes (str) {
 
 ```
 
-### 原型
+## ::o::o::o:原型
 
 原型prototype其实是function对象下的一个属性，打印结果也是对象
 
@@ -2211,7 +2211,7 @@ console.log (car.name) // 'BWM'
 // car.prototype.constructor -> Car() -> prototype -> name: 'Benz'
 ```
 
-#### JS插件
+## JS插件
 
 window 和 return
 
@@ -2273,4 +2273,1667 @@ add() // 3
 })()
 
 var car = new Car();
+```
+
+**计算插件**
+``` js
+;(function () {
+   function Compute(opt) {
+      this.x = opt.firstNum || 0
+      this.y = opt.secondNum || 0
+   }
+
+   Compute.prototype = {
+      add: function () {
+         return this.x + this.y
+      },
+      minus: function () {
+         return this.x - this.y
+      },
+      mul: function () {
+         return this.x * this.y
+      },
+      div: function () {
+         return this.x / this.y
+      }
+   }
+
+   window.Compute = Compute;
+})()
+
+
+var compute = new Compute({
+   firstNum: 1,
+   secondNum: 2
+})
+
+var res1 = compute.add() // 3
+var res2 = compute.minus() // -1
+var res3 = compute.mul() //2
+var res4 = compute.div() //0.5
+```
+
+## 原型链
+
+``` js
+function Professor() {}
+Professor.prototype.tSkill = 'JAVA'
+
+var professor = new Professor()
+
+Tearcher.prototype = prefessor;;
+function Teacher() {
+   this.mSkill = 'JS'
+}
+
+var teacher = new Teacher()
+
+Student.prototype = teacher;
+function Student() {
+   this.pSkill = 'CSS'
+}
+
+var student = new Student()
+
+console.log (student)
+
+/**
+ * Student{
+ *   pSkill: 'CSS',
+ *   __proto__: {
+ *     mSkill: 'JS',
+ *     __proto__: {
+ *       __proto__: {
+ *         tSkill: 'JAVA',
+ *         constructor: Prefessor()
+ *         __proto__: {
+ *           constructor: Object
+ *         }
+ *       }
+ *     }
+ *   }
+ * }
+ * 
+*/
+
+```
+
+沿着__proto__去找原型上的属性，直到原型链的顶端Object.prototype，形成的链就是原型链
+
+**通过后代修改祖先的属性，原则上是不可以的，但属性是引用值是可以修改的，原始值不能修改**
+``` js
+function Professor() {}
+Professor.prototype.tSkill = 'JAVA'
+
+var professor = new Professor()
+
+Tearcher.prototype = prefessor;;
+function Teacher() {
+   this.mSkill = 'JS'
+   this.info = {
+      name: 'js',
+      age: 1
+   }
+   this.friends = 100
+}
+
+var teacher = new Teacher()
+
+Student.prototype = teacher;
+function Student() {
+   this.pSkill = 'CSS'
+}
+
+var student = new Student()
+student.info.car = 'Benz' // 可以修改
+student.info.age = 2 // 可以修改
+student.friends++  // 不能修改原型，增加自己的属性friends: 101
+console.log (student)
+/**
+ * Student{
+ *   pSkill: 'CSS',
+ *   friends: 101,
+ *   __proto__: {
+ *     friends: 100,
+ *     mSkill: 'JS',
+ *     info: {
+ *      name: 'js',
+ *      age: 2,
+ *      car: 'benz'
+ *     },
+ *     __proto__: {
+ *       __proto__: {
+ *         tSkill: 'JAVA',
+ *         constructor: Prefessor()
+ *         __proto__: {
+ *           constructor: Object
+ *         }
+ *       }
+ *     }
+ *   }
+ * }
+ * 
+*/
+
+```
+后代不能修改祖先原型上的属性（原始值）
+``` js
+function Person() {
+   this.smoke = function () {
+      this.weight --
+   }
+}
+
+Person.prototype = {
+   weight: 100
+}
+
+var person = new Person()
+
+person.smoke()
+
+console.log (person) // { weight: 99  }
+console.log (Person.prototype) // { weight: 100 }
+
+```
+
+实例中自己有的属性就拿自己的，没有就往原型上找
+``` js
+function Car () {
+   this.brand = 'Benz'
+}
+
+Car.prototype = {
+   brand: 'BWM',
+   intro: function () {
+      console.log (this.brand)
+   }
+}
+
+var car = new Car()
+/**
+ * function Car () {
+ *   var _this = {
+ *     brand: 'Benz'
+ *   }
+ * }
+*/
+
+car.intro()  // Benz
+
+// Car.prototype也是一个对象
+Car.prototype.brand // 'BWM'
+Car.prototype.intro() // 'BWM'
+```
+
+原型的原型一定是系统自带的Object构造出来的
+
+创建对象的几种方式
+1. 对象字面量
+``` js
+var obj = {}
+```
+2. 系统自带的Object
+``` js
+var obj = new Object()
+```
+3. 自己构造
+``` js
+function Obj () {
+
+}
+var obj = new Obj()
+```
+4. Object.create(原型对象, null) 创建对象
+
+可自定义原型
+``` js
+function Obj () {}
+Obj.prototype.num = 1
+var obj1 = Object.create(Obj.prototype)
+var obj2 = new Obj()
+
+// obj1 == obj2
+```
+实例化obj2
+1. 调用构造函数Obj的初始化属性和方法
+2. 指定实例对象的原型
+
+
+**不是所有的对象都继承于Object.prototype**
+原型只能系统构造，不是自己定义
+```js
+var obj = Object.create(null) //没有原型
+
+var obj1 = {
+   count: 1
+}
+
+obj.__proto__ = obj1
+conosole.log (obj.count) // undefined
+```
+
+**document.write（）一定会经过隐式类型转换为string**
+``` js
+var obj = {}
+var obj1 = Object.create(null)
+
+// 会调用Object.toString, obj1没有原型，没有toString
+document.write(obj) // [object Object]
+dodument.write(obj1) // Error 可以自己加toString obj1.toString= function
+
+```
+
+**原型方法的重写**
+
+使用Object.prototype.toString.call(1)打印出来是[object Number],实现不了变成字符串1，所有Number包装类重写toString方法
+
+Number.prototype.toString.call(1)打印出来为'1'
+
+
+**call / apply改变this指向**
+``` js
+function Car (brand, color) {
+   this.brand = brand;
+   this.color = color;
+}
+
+var newCar = {}
+
+// { brand: 'Benz', color: 'red' }
+Car.call(newCar, 'Benz', 'red') 
+Car.apply(newCar, ['Benz', 'red'])
+```
+
+## 对象继承
+
+1. 通过原型继承
+``` js
+function Teacher() {
+   this.skill = 'JS'
+}
+
+Teacher.prototype = {
+   lang: 'US'
+}
+
+var teacher = new Teacher();
+
+Student.prototype = teacher
+
+function Student () {
+   this.name = 's'
+}
+
+var student = new Student()
+
+console.log (student.lang) // US
+
+```
+
+2. 通过call/apply借用对象的属性实现继承, 不能访问对象原型上的属性和方法
+
+``` js
+function Teacher () {
+   this.skill = 'JS'
+}
+
+Teacher.prototype = {
+   lang: 'US'
+}
+
+function Student(name, skill) {
+   Teacher.call(this, skill)
+   this.name = name
+}
+
+var student = new Student('student', 'CSS')
+
+console.log(student.name, student.skill) // student CSS
+
+```
+
+3. 公共原型继承
+``` js
+function Teacher() {
+   this.skill = 'JS'
+}
+
+Teacher.prototype = {
+   mSkill: 'JAVA'
+}
+
+var teacher = new Teacher()
+
+Student.prototype = Teacher.prototype
+Student.prototype.age = 18 // 此时Teacher的原型也会修改
+
+function Student () {
+   this.skill = 'CSS'
+}
+
+var student = new Student()
+
+console.log (student.mSkill) // JAVA
+
+```
+
+4. 圣杯模式
+``` js
+function Teacher() {
+   this.name = 'LI'
+}
+
+Teacher.prototype = {
+   pskill: 'JAVA'
+}
+
+var t = new Teacher()
+
+function Student () {
+   this.name = 'LIU'
+}
+
+// 定义中间件
+function Buffer () {}
+Buffer.protype = Teacher.prototype
+var buffer = new Buffer()
+Student.prototype = buffer
+Student.prototype.age = 10 //不会影响Teacher的原型
+
+var s = new Student()//
+```
+
+**封装继承**
+
+1. 基本写法
+``` js
+function inherit(Target, Origin) {
+   function Buffer() {}
+   Buffer.prototype = Origin.prototype;
+   Target.prototype = new Buffer();
+   // 还原构造器
+   // 让Target的Constructor为Target
+   Target.prototype.constructor = Target;
+   // 保存继承源
+   // Target继承Origin
+   Target.prototype.super_class = Origin;
+}
+
+``` 
+
+2. 使用闭包的方式，也是模块化开发方式
+
+``` js
+var inherit = (function () {
+   var Buffer = function () {}
+   return function (Target, Origin) {
+      Buffer.prototype = Origin.prototype;
+      Target.prototype = new Buffer();
+      Target.prototype.constructor = Target;
+      Target.prototype.super_class = Origin
+   }
+})()
+
+```
+
+**闭包的多种方式**
+
+1. 
+``` js
+function test() {
+   var num = 100
+   return function () {
+      num++
+      console.log (num)
+   }
+}
+
+var add = test()
+add()
+
+```
+
+2. 
+```js
+function test() {
+   var num = 100
+   return {
+      add () {
+         num ++
+         console.log (num)
+      },
+      minus() {
+         num--
+         console.log (num)
+      }
+   }
+}
+
+var compute = test()
+compute.add()
+compute.add()
+compute.minus()
+
+```
+
+3. 
+``` js
+function Test() {
+   var num = 100
+
+   this.add = function () {
+      num ++
+      console.log (num)
+   }
+
+   this.minus = function () {
+      num --
+      console.log (num)
+   }
+   // 实例化时会隐式的返回this对象
+}
+
+var test = new Test()
+test.add()
+test.add()
+test.minus()
+```
+
+## 对象
+
+**链式调用通过return this**
+
+```js
+var obj = {
+   speak() {
+      console.log ('speak')
+      return this
+   },
+   eat() {
+      console.log ('eat')
+      return this
+   }
+}
+
+obj.speak().eat()
+```
+
+**通过中括号访问可变的属性**
+
+``` js
+var obj = {
+   name1: 'n',
+   name2: 'n2'
+}
+var a = 1
+obj['name' + a ]
+```
+
+**遍历对象使用for in**
+
+```js
+var obj = {
+   name: 'obj'
+   age: 1
+}
+for (var key in obj) {
+   // 不能这样访问，obj.key 会被转为obj['key']
+   // 在obj上找不到key 所以是undefined
+   console.log (obj.key) // undefined
+   console.log (key + ':' + obj[key])
+}
+```
+
+**hasOwnProperty:排除原型上的自定义属性**默认会遍历出原型上自定义的属性,只想要自己有的属性，用hasOwnProperty
+``` js
+function Car () {
+   this.color = red
+}
+
+Car.prototype.brand = 'Benz'
+Object.prototype.name = 'Object'
+
+var car = new Car()
+
+for (var key in car) {
+   console.log (key, ':', car[key]) // color: red brand:Benz name:Object 
+   if (car.hasOwnProperty(key)) {
+      console.log (key, ':', car[key]) // color: red
+   }
+}
+
+```
+
+**in:是否是对象的属性，不排除原型**
+``` js
+var car = {
+   brand: 'Benz'
+}
+// 默认会找car['place']
+console.log ('place' in car) // false
+
+function Car () {
+   this.color = red
+}
+
+Car.prototype.brand = 'Benz'
+
+var car = new Car()
+
+console.log ('brand' in car) // true
+```
+
+**:pink:instanceof** 
+A instanceof B：A对象的原型里到底有没有B的原型，有返回true否则返回false
+``` js
+function Car () {
+
+}
+
+Car.prototype = {
+
+}
+
+var car = new Car()
+
+car instanceof Car // true
+car instanceof Object // true
+[] instanceof Array // true
+[] instanceof Object // true
+{} instanceof Object // true
+```
+
+**判断是否是数组**
+
+``` js
+var arr = [1, 2, 3]
+console.log (arr.constructor === Array) 
+console.log (arr.instanceof Array)
+// 推荐用第三种
+/**
+ * 原理
+ * Object.prototype = {
+ *   toString () {
+ *     // call后this指向arr,所以打印出来是'[object Array]'
+ *     this.toString()
+ *   }
+ * } 
+ */
+console.log (Object.prototype.toString.call(arr) === '[object Array]')
+console.log (Array.isArray(arr))
+```
+
+## This
+
+1. 全局this指向window
+2. 没有实例化的函数内部的this默认指向window(预编译)
+``` js
+function test(b) {
+   this.d = 3
+   var a = 2
+   function c() {} 
+}
+test(1)
+console.log (window.d) //3 
+/*
+* AO = {
+   arguments: [1]
+   this: window
+   a: undefined  2
+   b: undefined  1
+   c: undefined  function c
+  }
+*/
+```
+3. 构造函数实例化后，this指向实例化对象
+``` js
+function Car () {
+   /**
+    * var _this = {
+    *   brand: 'Audio',
+    *   __proto__: Car.prototype
+    * }
+   */
+   this.brand = 'Audio'
+   // return _this
+}
+
+var car = new Car()
+
+/**
+ * AO = {
+ *   this: window  -> 实例化后 car
+ * }
+ * 
+ * GO = {
+ *   Car: function
+ *   car: {}
+ * }
+*/
+```
+
+4. 通过call/apply改变this指向
+``` js
+function Car () {
+   this.name = 'car'
+}
+
+function Person () {
+   Car.apply(this)
+   this.age = 18
+}
+```
+
+**callee/caller**
+
+1. callee返回正在执行的函数对象
+``` js
+function test(a, b) {
+   // 返回实参列表所对应的函数
+   console.log (arguments.callee) // function test(a, b) {}
+   console.log (arguments.callee.length) // 2
+   console.log (test.length) // 2
+
+   // 实参长度
+   console.log (arguments.length) // 2
+}
+
+test(1, 2)
+```
+
+计算n的累加
+``` js
+function sum (n) {
+   if(n <= 1) return 1
+   return n + sum(n - 1)
+}
+
+sum(10) // 55
+
+
+// 使用模块化开发需要使用到callee
+var sum = (function (n) {
+   if (n <= 1) return 1
+   return n + arguments.callee(n - 1)
+})()
+```
+
+2. caller: 返回当前被调用函数的函数引用
+
+``` js
+function test1 () {
+   test2()
+}
+
+function test2() {
+   console.log (test2.caller) // function test1
+}
+
+test1()
+```
+
+
+## 看看题, 巩固一下
+
+1. call/apply
+``` js
+funtion foo () {
+   bar.apply(null, arguments)
+}
+
+function bar() {
+   console.log (arguments) // [1, 2]
+}
+
+foo(1, 2)
+
+
+```
+
+2. typof 可能返回的值
+string类型的：object(null) / function / string / number / boolean / undefined
+``` js
+console.log (typeof null) // object, 历史遗留问题
+```
+
+3. arguments
+``` js
+function b (x, y, a) {
+   a = 10
+   console.log (arguments[2]) // 10
+   arguments[2] = 20
+   console.log (arguments[2]) // 20
+}
+b(1, 2, 3)
+```
+
+4. 逗号运算
+``` js
+var f = (
+   function f() {
+      return 1
+   },
+   function g() {
+      return 2
+   }
+)
+console.log (typeof f) // function 
+
+var e = (
+   function f() {
+      return '1'
+   },
+   function g() {
+      return 2
+   }
+)()
+console.log (typeof e) // number
+```
+
+5. undefined/ null
+``` js
+console.log (undefined > 0) // false
+console.log (undefined < 0)// false
+console.log (undefined === 0) // false
+
+console.log (null > 0) // false
+console.log (null < 0)// false
+console.log (null === 0) // false
+
+
+console.log (undefined == null) // true
+console.log (undefined === null) // false
+console.log (isNaN('100')) // false
+console.log (paseInt('1s') === 1) // true
+
+```
+
+6. 重写isNaN
+``` js
+function isNaN (num) {
+   var res = Number(num) + ''
+   if(res === 'NaN') return true
+   return false
+}
+
+```
+
+7. obj
+``` js
+console.log ({} == {}) // false
+// 为什么不等，引用值对比的是地址，两个值存储在不同的空间，地址也不同
+// 怎样相等
+var a = {}
+var b = a
+console.log (b == a) // true
+
+```
+
+8. this/new
+``` js
+var a = '1'
+function test() {
+   var a = '2'
+   this.a = '3'
+   console.log (a)
+}
+
+test()
+new test()
+console.log (a)
+
+// '2', '2', '3'
+
+
+var b = 5
+function foo() {
+   b = 0
+   console.log (b)
+   console.log (this.b)
+   var b 
+   console.log (b)
+}
+
+test() // 0 5 0
+new test() // 0 undefined 0
+```
+
+9. js模块化开发
+
+``` js
+window.onLoad = function () {
+   init()
+}
+
+function init () {
+   fecci(10)
+   div(100)
+}
+
+var fecci = (function(){
+   return function (n) {
+      if (n <= 0 )return 0
+      if (n <= 2) return 1
+      return arguments.callee(n - 1) + arguments.callee(n - 2)
+   }
+})()
+
+var div = (function() {
+   function div(n) {
+      var arr = []
+      for (var i = 0 ; i <= n; i++) {
+         if (i % 3 === 0 && i % 5 === 0) arr.push(i)
+      }
+      return arr
+   }
+
+   return div
+}())
+
+```
+
+10. 类型转换，字符串比较使用ascci码,其中有一个是数字才会隐式类型转换
+``` js
+var str = 89 > 9 ? '89' > '9' ? 'd' : 's' :'f'
+```
+
+11. 定义值
+``` js
+function test() {
+   console.log (a) // undefined
+   var a = 2
+   console.log (a) // 2
+   console.log (b) // ReferenceError
+}
+test()
+
+```
+12. AO
+``` js
+function test() {
+   var a
+   a()
+   function a() {
+      console.log (1) // 1
+   }
+}
+test()
+
+```
+
+13. This
+``` js
+var name 't'
+var obj = {
+   name: 'test',
+   say: function () {
+      console.log (this.name)
+   }
+}
+
+var func = obj.say
+func() //  t
+obj.say() // test
+
+var obj1 = {
+   name: 'test1',
+   say: function (fn) {
+      fn()
+      //相当于func
+   }
+}
+
+obj1.say(obj.say) // t
+obj1.say = obj.say
+obj1.say() // test1
+
+```
+
+14. This
+``` js
+function test() {
+   var obj = {
+      name: 'test',
+      say: function () {
+         console.log (this.name)
+      }
+   }
+
+   var test1 = {
+      name: 'test1'
+   }
+   var test2 = {
+      name: 'test2'
+   }
+   var test3 = {
+      name: 'test3'
+   }
+
+   test3.say = obj.say
+
+   obj.say.call(test1) // test1
+   obj.say.apply(test2) // test2
+   obj.say() // test
+   test3.say() // test3
+}
+
+```
+
+15. 闭包
+``` js
+var bar = {
+   a: 1
+}
+
+function test() {
+   bar.a = 'a'
+   Object.prototype.b = 'b'
+   return function () {
+      console.log (bar.a) // 'a'
+      console.log (bar.b) // 'b'
+   }
+}
+
+test()()
+```
+
+16. 预编译/构造函数/原型/this/对象/运算符优先级/变量提升
+``` js
+function Foo() {
+   getName = function () {
+      console.log (1)
+   }
+   return this;
+}
+
+Foo.getName = function () {
+   console.log (2)
+}
+
+Foo.prototype.getName = function () {
+   console.log (3)
+}
+
+var getName = function () {
+   console.log (4)
+}
+
+function getName () {
+   console.log (5)
+}
+
+/**
+ * GO = {                                             执行时
+ *   getName: undefined -> function(){console.log(5)} -> function(){console.log(4)}
+ *            Foo()后
+ *            -> function(){console.log(1)}
+ *   Foo: function 
+ * }
+ * 
+*/
+// 函数也是特殊的对象
+Foo.getName(); // 2
+// 预编译执行时getName重新赋值为function(){console.log (4)}
+getName(); //4
+// 括号运算符优先级大于点
+// Foo执行，再this.getName()， 此时的this指向window,getName重新赋值为function(){console.log(1)}
+Foo().getName(); //1
+// getName为function(){console.log(1)}
+getName(); // 1
+// 点运算的优先级大于new,先执行Foo.getName输出2，new 2没有任何意义
+new Foo.getName() // 2
+// 括号运算符优先级大于点，先执行new Foo(),实例化后自己上没有getName就到原型中找
+new Foo().getName()// 3
+// new 3没有意义
+new new Foo().getName() // 3
+```
+
+17. 判断是否是瑞年
+1. 能被4整除并且不能被100整除
+2. 能被400整除
+``` js
+function isLeapYear(year) {
+   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0
+}
+```
+
+## 三目运算符，默认会返回
+``` js
+var a = 1
+//                return '>0'   return '<=0'
+var str = a > 0 ? '> 0' : '<=0' 
+
+```
+
+## ::o::o::o:对象克隆
+
+也叫拷贝一个对象
+
+普通拷贝：用赋值的方式拷贝，改变其中一个对象的属性，另一个对象也会改变
+``` js
+var obj = {
+   name: 'foo'
+}
+
+var newObj = obj
+
+newObj.age = 18
+console.log (obj, newObj) // {name: 'foo', age: 18}
+```
+
+#### 浅克隆(只处理了最外层的属性)
+
+``` js
+const obj = {
+   name: 'foo',
+   age: 18
+}
+
+function clone (origin, target) {
+   var tar = target || {}
+   for(var key in origin) {
+      if(origin.hasOwnProperty(key)) {
+         tar[key] = origin[key]
+      }
+   }
+   return tar
+}
+const newObj = clone(obj)
+```
+
+#### 深拷贝
+
+``` js
+function deepClone (origin, target) {
+   var tar = target || {};
+   for (var key in origin) {
+      if (origin.hasOwnProperty(key)) {
+         const value = origin[key]
+         if (typeof value === 'object' && value !== null) {
+            const childTar = Object.prototype.toString.call(value) === '[object Array]' ? [] : {}
+            tar[key] = deepClone(value, chidTar)
+         } else {
+            tar[key] = origin[key]
+         }
+      }
+   }
+   return tar
+}
+
+```
+
+``` js
+var obj = {
+   name: 'test'
+}
+var str = JSON.strgify(obj)
+var newObj = JSON.parse(str)
+```
+
+## 数组
+
+**特性**
+1. 每项可以为空
+2. 空项打印出来是undefined
+3. 数组最后一项是加逗号没有意义，其他项加逗号，表示空项， 空项也占数组的长度
+
+
+#### 定义数组的方式
+
+1. `var arr = [1,3]`
+2. `var arr = new Array(1,3)`
+1个参数：`new Array(1) //设置数组的长度`
+3. `var arr = Array()`
+
+本质都是由Array构造出来的，原型都是Array.prototype
+
+**数组本质是对象的特殊形式，可以使用对象来模拟**
+``` js
+var arr = [1, 2, 3]
+var obj = {
+   0: 1,
+   1: 2,
+   2: 3
+}
+arr[0] // 1
+obj[0] // 1
+```
+
+**稀松数组：**
+
+``` js
+var arr = [, 2, 2, 4,] // [empty, 2, 2, 4]
+// 打印第0项也是undefined
+console.log(arr[0]) // undefined
+
+```
+
+**获取不存在的索引为undefined**
+``` js
+const a = [1, 2]
+console.log (a[2]) // undefined
+```
+
+**数组方法：继承Array.prototype**
+
+*** 修改原数组 ***
+1. push/unshift ,返回值是执行了方法以后数组长度, 可以增加多个值
+push(数组最后一位添加)/unshift(数组首位之前添加)
+
+``` js
+Array.prototype.myPush = function () {
+   for(var i = 0 ;i < arguments.length; i++) {
+      this[this.length] = arguments[i]
+   }
+   return this.length
+}
+
+
+Array.prototype.myUnshift = function () {
+   var pos = 0
+   for(var i = 0; i < arguments.length; i++) {
+      this.splice(pos, 0, arguments[i])
+      pos++
+   }
+   return this.length
+}
+
+Array.prototype.myUnshift2 = function() {
+   var args = Array.prototype.slice.call(arguments)
+   var newArr = args.concat(this)
+   return newArr
+}
+let arr = ['d', 'e']
+arr.myUnshift('a', 'b', 'c') // ['a', 'b', 'c', 'd', 'e']
+```
+2. shift/pop ,返回值是当前剪切的值
+pop(删除数组最后一位)/shift(删除数组首位)
+``` js
+const arr = [2, 4, 5]
+console.log (arr.pop) // 5
+```
+3. reverse: 倒叙
+``` js
+const arr = [1, 3]
+const newArr = arr.reverse() // [3, 1]
+```
+
+4. splice(开始项的下标，剪切的长度，剪切以后最后一位开始添加数据)
+``` js
+var arr = [1, 3]
+arr.splice(1, 1, 2,3) // [1, 2, 3]
+
+
+// 在当前项之前添加
+arr.splice(1, 0, 2) // [1,2,3]
+arr.splice(-1, 0 2) // [1, 2, 3]
+```
+
+5. sort, 返回排序后的结果， 默认按照ascii码对应的十进制来排序的
+
+``` js
+var arr = [-1, 2, 1, 7]
+arr.sort() // [-1, 1, 2, 7]
+
+var arr = [23, 48, 9, 5]
+arr.sort() // [23, 48, 5, 9]
+```
+
+**解决问题：自定义排序**
+1. 参数：a,b
+2. 返回值： 负值 a排前面
+           正值 b排前面
+           0   不动
+
+``` js
+var arr = [1, 23, 2]
+// 正序
+arr.sort(function (a,b) {
+   if (a > b) return 1
+   return -1
+})
+
+arr.sort(function (a, b) {
+   return a - b
+})
+
+// 降序
+arr.sort(function (a, b) {
+   if (a < b) return 1
+   return -1
+})
+arr.sort(function (a, b) {
+   return b - a
+})
+```
+
+**随机排序**
+``` js
+var arr = [1, 3, 3,455, 2]
+arr.sort(function (a, b) {
+   return Math.random() - 0.5
+})
+
+```
+
+**对象数组排序**
+``` js
+var arr = [
+   {
+      age: 2
+   },
+   {
+      age: 18,
+   },
+   {
+      age: 5
+   }
+]
+
+arr.sort(function (a, b) {
+   if (a.age > b.age) return 1
+   return -1
+})
+
+```
+
+**不修改原数组**
+
+1. concat: 数组拼接
+``` js
+var arr = [1, 3, 4]
+var arr1 = [2]
+arr.concat(arr1) // [1, 2, 3, 4]
+```
+
+2. toString: 将数组转为字符串并用逗号隔开
+``` js
+var arr = [1, 3, 3]
+arr.toString() // '1,3,3'
+
+```
+
+3. slice
+0个参数：相当于赋值数组
+1个参数：从下标开始截取[index]
+2个参数：第一个参数开始截取的下标并包含，第二个参数截取到的下标位置之前（不包含当前）[index, last)
+        从第一个下标开始到第二个下标之前
+``` js
+var arr = [1, 3, 4, 5, 6]
+arr.slice() // [1, 3, 4, 5, 6]
+arr.slice(1) //[3, 4, 5, 6]
+arr.slice(1, 4) // [3, 4, 5]
+
+arr.slice(-3, 4) //[4, 5]
+arr.slice(-3, -1)// [4, 5]
+```
+
+4. join / split
+
+join: 将数组变为字符串
+split: 将字符串转为数组,第二个参数为截取的长度,从0开始
+
+``` js
+var arr = [1, 3, 4]
+arr.join('/') // '1/3/4'
+
+arr.split('/') // [1, 3, 4]
+
+arr.split('/', 2) // [1, 3]
+```
+
+## 类数组
+
+类似于数组的对象，原型是Object.prototype
+
+将类数组转为数组`Array.prototype.slice.call(arguments)`
+
+arguments / 一组dom元素
+``` js
+var obj = {
+   '0': 1, 
+   '1': 2.
+   'length': 2,
+   __proto__: Object
+}
+
+```
+
+``` js
+var obj = {
+   '2': 3,
+   "3": 4,
+   'length': 2,
+   'splice': Array.prototype.splice,
+   'push': Array.prototype.push
+}
+
+obj.push(1)
+obj.push(2)
+console.log (obj) // { '2': 1, '3': 2, 'length': 4 }
+
+// push的原理
+Array.prototype.push = function (elem) {
+   this[this.length] = elem
+   this.length ++
+}
+```
+
+**看看题，巩固一下**
+
+1. 数组按照元素的字节数排序
+``` js
+var arr = ['HELLO', '世界', 'Word!', '你好']
+function getBytes(str) {
+   var bytes = str.length;
+   for(var i = 0 ; i < str.length; i++) {
+      if (str.charcodeAt(i) > 255) bytes++
+   }
+   return bytes
+}
+arr.sort(function (a, b) {
+   return getBytes(a) - getBytes(b)
+})
+```
+
+2. 封装typeof 返回所有的类型
+number / boolean / string / undefined / null / function / object('object Object') / object number('object Number') / object string('object String') / object boolean('object Boolean') / array('object Array')
+
+``` js
+function myTypeof(val) {
+   if (val === null) return 'null'
+   var type = typeof val,
+       toString = Object.prototype.toString,
+       res = {
+         '[object Array]' : 'array',
+         '[object Object]' : 'object',
+         '[object Number]' : 'object number',
+         '[object String]' : 'object string',
+         '[object Boolean]' : 'object boolean'
+       }
+   if (type === 'object') {
+      var ret = toString.call(val)
+      return res[ret]
+   }
+
+   return type
+}
+myTypeof(null) // null
+myTypeof(new Number(1)) // object number
+```
+
+3. 数组去重
+``` js
+Array.prototype.unique = function () {
+   var obj = {}
+   var newArr = []
+   for(var i = 0; i < this.length; i++) {
+      var item = this[i]
+      // if (!obj[item]) {
+      //    obj[item] = 'value'
+      //    newArr.push(item)
+      // }
+      // 处理0不能排除的问题
+      if (!obj.hasOwnProperty(item)) {
+         obj[item] = item
+         newArr.push(item)
+      }
+   }
+   return newArr
+}
+
+```
+
+4. 找出字符串中只出现1次的第一个字符
+``` js
+var str = 'abcabecacbafbcacgaaaccbb'
+Array.prototype.uniqueOnce = function () {
+   var temp = {}
+   for (var i = 0; i < this.length; i++) {
+      var item = this[i]
+      if (temp.hasOwnProperty(item)) {
+         temp[item]++
+      } else {
+         temp[item] = 1
+      }
+   }
+
+   for(var key in temp) {
+      if (temp[key] === 1) return key
+   }
+}
+str.uniqueOnce() // e
+```
+
+5. typeof arguments -> object
+```js
+function test() {
+   console.log (typeof arguments) // object
+}
+test()
+```
+
+6. 自变量定义函数会忽略函数名
+```js
+var test = function a () {
+   console.log (test.name) // a
+   a()
+}
+test()
+console.log (typeof a) // undefined
+```
+
+7. 优化switch
+``` js
+function test(type) {
+   switch(type) {
+      case 1:
+         console.log ('M')
+         break;
+      case 2:
+         console.log ('T')
+         break;
+      default:
+         console.log ('Know')
+         break;
+   }
+}
+test()
+
+//使用数组优化
+function test(type) {
+   var arr = ['M', 'T', 'K']
+   if (arr[type - 1] !== undefined) return console.log (arr[type - 1])
+   return console.log ('Know')
+}
+
+// 不想使用type - 1怎们办，利用数组的特性，前面加空项，
+function test(type) {
+   var arr = [, 'M', 'T', 'K']
+   if (arr[type] !== undefined) return console.log (arr[type - 1])
+   return console.log ('Know')
+}
+```
+
+## JS中的错误类型
+
+**语法错误: SyntaxError**
+1. 变量名不规范
+``` js
+var 1 = 1
+var 1ab = 1
+function 1test() {}
+```
+
+2. 关键字赋值
+``` js
+new = 5
+function = 1
+```
+
+3. 基本的语法错误
+``` js
+var a = 5:
+```
+
+
+**引用错误: ReferenceError**
+1. 变量或函数未声明
+``` js
+test()
+console.log (a) // Reference Error a is not defined
+```
+
+2. 给无法被赋值的对象赋值
+``` js
+var a = 1 = 2;
+
+var b = 1
+console.log (b) = 1
+```
+
+**范围错误: RangeError**
+1. 数组长度赋值为负数
+``` js
+var arr = [1, 3, 5]
+arr.length = -1 // Invalid array length
+```
+
+2. 对象方法参数超出可行范围
+``` js
+var num = new Number(66.66)
+console.log (num.toFixed(-1))
+```
+
+**类型错误：TypeError**
+1. 调用不存在的方法
+``` js
+123()
+
+var obj ={}
+obj.say()
+
+var a = new 'string'
+
+```
+
+**URIERROR: URI错误**
+``` js
+decodeURI('3344$%')
+```
+
+**EvalError: eval函数执行错误**
+``` js
+console.log (eval('obj'))
+```
+
+#### 手动抛出错误的方法
+
+try catch finally throw
+``` js
+try {
+   console.log (a)
+} catch(e) {
+   console.log(e.name, e.message)
+} finally {
+   console.log ('正常执行')
+}
+```
+
+## 严格模式
+
+`use strict`
+出现的原因，为了规范以后的语法
+
+建议在单独的模块使用
+``` js
+
+(function () {
+'use strict'
+
+// with语法不能使用
+// caller callee不能使用
+// var a = b = 1不行
+// 变量必须声明 a = 2
+// 函数中的this指向undefined
+// 函数的参数不能重复
+// 对象的属性不能重复,但不报错
+// eval有自己的作用域
+eval('var b = 2; console.log(2)')
+console.log (a) // a is not defined
+function test(b, b) {
+   var obj = {
+      a: 1,
+      a: 2,
+   }
+   console.log (obj.a) // 2
+   console.log (b) // error
+   console.log(this) // undefined
+   var a = 2
+   console.log (arguments.callee)
+   with(test) {
+      console.log (a) // 2
+   }
+}
+
+test()
+})()
+```
+
+## 垃圾回收机制
+
+原理：
+1. 找出不再使用的变量（只讨论函数内的变量，函数内部的变量如果不再使用了，只有等页面关闭才会自动回收， 全局变量浏览器关闭后自动回收）
+2. 释放其占用内存（不单是删除某个值，而是在内存中处理）
+3. 固定的时间间隔运行
+
+**闭包产生的作用域链不释放，需要手动清除引用**
+``` js
+function foo() {
+   var a = 'foo'
+   return function() {
+      a++
+      console.log (a)
+   }
+}
+var bar = foo()
+bar() // 2
+bar() // 3
+
+// 清除
+bar = null;
+```
+
+**处理机制：**
+
+1. 标记清除
+垃圾回收时，先清除全局和闭包产生的变量，如果还有其他变量就会删除离开状态的全部变量
+``` js
+function foo() {
+   var bar = 'bar' // 标记bar进入
+}
+
+foo() // bar离开 
+
+```
+
+2. 引用计数
+
+对引用值进行计数，为0就清除
+``` js
+function foo() {
+   var a = new Object() // a:1
+   var b = new Object() // b:1
+   var c = a // a++
+   var c = b // a--
+   // 循环引用会导致a, b一直加
+   a.prop = b // b++
+   b.prop = a // a++
+
+   // 解决方式，清除引用
+   a = null
+   b = null
+}
+
 ```
