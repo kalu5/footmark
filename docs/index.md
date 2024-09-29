@@ -12,8 +12,8 @@ hero:
       link: /pages/base/index
 
   image:
-      src: /vitepress-logo-large.webp
-      alt: VitePress
+      src: /y.png
+      alt: Y
 
 features:
   - title: 需求

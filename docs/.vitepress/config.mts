@@ -5,12 +5,11 @@ export default defineConfig({
   title: "kalu5",
   description: "Yak shaving",
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/footmark/vitepress-logo-mini.svg' }],
-    ['link', { rel: 'icon', type: 'image/png', href: '/footmark/vitepress-logo-mini.png' }],
+    ['link', { rel: 'icon', type: 'image/png', href: '/footmark/l.png' }],
     ['meta', { name: 'theme-color', content: '#5f67ee' }]
   ],
   themeConfig: {
-    logo: { src: '/vitepress-logo-mini.svg', width: 24, height: 24 },
+    logo: { src: '/j.png', width: 24, height: 24 },
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: '薅牛毛', link: '/' },
