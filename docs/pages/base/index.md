@@ -10,6 +10,10 @@
 
 [重学JavaScript](./js/js-deep)  [对象克隆](./js/clone-obj)  [数组遍历](./js/arr-traversal)
 
+## 代码整洁之道
+
+[设计模式](./code/design-principles) 
+
 ## NodeJS-核心实现
 
 [MiniExpress](./node/mini-express)

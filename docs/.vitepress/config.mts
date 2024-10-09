@@ -34,6 +34,12 @@ export default defineConfig({
               link: '/pages/base/js/arr-traversal'
             }
           ] },
+          { text: '代码整洁之道', items: [
+            {
+              text: '设计模式',
+              link: '/pages/base/code/design-principles'
+            },
+          ] },
           { text: 'NodeJs', items: [
             {
               text: 'MiniExpress',
