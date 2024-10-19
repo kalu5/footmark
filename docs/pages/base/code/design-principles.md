@@ -262,3 +262,140 @@ class UserService {
 }
 
 ```
+
+## 设计模式的种类
+
+总共23种
+
+1. 创建型模式：创建类实例对象的方式
+   - 单例
+   - 工厂
+   - 抽象工厂
+   - 原型
+   - 建造者
+
+2. 结构型模式：类或对象有机结合形成一种复合型的对象结构
+   - 适配器
+   - 装饰器
+   - 桥接
+   - 外观
+   - 享元
+   - 代理
+   - 组合
+
+3. 行为型模式：对象之间的交互方式
+   - 模板
+   - 命令
+   - 状态
+   - 访问者
+   - 观察者
+   - 迭代器
+   - 备忘录
+   - 中介者
+   - 解释器
+   - 策略
+   - 职责链
+
+## 单例模式：Singleton pattern
+
+- 定义： 类只有唯一一个对象实例
+- 创建要求：
+1. 类中有一个静态的创建唯一实例的方法（不可使用new创建对象）
+2. 构造方法私有
+3. 类只能通过静态方法的执行创建并返回唯一实例
+
+### 饿汉模式
+导入当前类的时候就已经创建实例，可能会造成空间浪费
+``` ts
+class User {
+  private instance: User
+
+  static {
+    instance = new User()
+  }
+
+  private constructor() {
+
+  }
+
+  public static getInstance () {
+    return User.instance
+  }
+}
+
+const user = User.getInstance();
+```
+
+### 懒汉模式
+只在需要的时候才创建实例
+``` ts
+class User {
+  private static instance: User
+
+  private constructor () {
+
+  }
+
+  public static getInstance () {
+    if (User.instance == null) {
+      User.instance = new User()
+    }
+    return User.instance
+  }
+}
+
+const user = User.getInstance();
+```
+
+案例：购物车
+``` ts
+interface IProductInfo {
+  goodsId: string;
+  productName: string;
+}
+interface IShoppingCart {
+  add (productInfo: IProductInfo): string;
+  remove (goodsId: string): boolean;
+  changeNum (num: number, goodsId: string): void;
+}
+
+class ShoppingCart implements IShoppingCart {
+  private static instance: ShoppingCart
+  private cartList: IProductInfo[] = []
+  private constructor () {
+
+  }
+  add (productInfo: IProductInfo): string {
+    this.cartList.unShift(productInfo)
+  }
+
+  remove (goodsId: string) {
+    const index = this.cartList.findIndex(cart => cart.goodsId === goodsId)
+    this.cartList.splice(index, 1)
+    return true
+  }
+
+  changeNum (num: number, goodsIs: string) {
+    this.cartList.forEach(cart => {
+      if (cart.goodsId === goodsId) {
+        cart.num = num
+      }
+    })
+  }
+
+  public static getInstance () {
+    if (!this.instance) {
+      this.instance = new ShoppingCart()
+    }
+    return this.instance
+  }
+}
+
+
+const cart = ShoppingCart.getInstance()
+cart.add ({
+  goodsId: '98999',
+  goodsName: 'Model3'
+})
+
+```
