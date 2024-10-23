@@ -47,7 +47,16 @@ export default defineConfig({
             },
           ] },
           { text: 'Css世界', link: '/pages/base/css/index' },
-          { text: 'Vue设计与原理', link: '/pages/base/vue/index' },
+          { text: 'Vue及周边', items: [
+            {
+              text: 'Vue设计原理',
+              link: '/pages/base/vue/index'
+            },
+            {
+              text: 'Pinia实现原理',
+              link: '/pages/base/vue/pinia'
+            }
+          ] },
           { text: 'React原理', link: '/pages/base/react/index' }
         ]
       }

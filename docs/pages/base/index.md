@@ -22,4 +22,6 @@
 
 ## Vue设计与实现
 
+[pinia](./vue/pinia.md)
+
 ## React原理
