@@ -398,4 +398,127 @@ cart.add ({
   goodsName: 'Model3'
 })
 
+``` 
+
+## 工厂模式
+
+工厂模式（Factory Pattern）是软件开发中一种创建型设计模式，用于创建对象的实例。它通过将对象创建的逻辑与使用对象的逻辑分离，使得代码更具可扩展性和维护性。
+
+**特点：**
+
+遵循了设计原则中的单一职责原则（工厂方法创建不同的操作类对象，不同的操作类实现不同的功能）
+
+
+示例：实现一个简单计算器
+
+设计计算器类
+``` ts
+interface ICalculatorOption {
+  //开始数字
+  startNumber: number;
+  // 计算符号
+  operator: string;
+  // 结束数字
+  endNumber: number;
+}
+
+// 计算器类
+class Calculator {
+  private startNumber: number;
+  private operator: string;
+  private endNumber: number;
+  constructor(opt: ICalculatorOption) {
+    this.startNumber = opt.startNumber;
+    this.operator = opt.operator;
+    this.endNumber = opt.endNumber;
+  }
+
+  calculate() {
+    const result = Calculate.calculateOperator()
+    this.result = result;
+    return this.result;
+  }
+}
+
+// 计算类
+class Calculate extends Calculator {
+  static calculteOperator() {
+    this.result = 0;
+    switch(this.operator) {
+      case '+': 
+        this.result = createAddCalculate().add()
+        break;
+      case '-':
+        this.result = createMinusCalculate().minus()
+        break;
+      case '*':
+        this.result = createMultiplyCalculate().multiply()
+        break;
+      case '/':
+        this.result = createDivideCalculte().divide()
+        break;
+      default:
+        break;
+    }
+    return this.result;
+  }
+}
+
+// 加法类
+class AddCalCulate extends Calculator {
+  add() {
+    return this.startNumber + this.endNumber;
+  }
+}
+
+// 减法类
+class createMinusCalculate extends Calculator {
+  minus() {
+    return this.startNumber - this.endNumber;
+  }
+}
+
+// 乘法类
+class createMultiplyCalculate extends Calculator {
+  multiply() {
+    return this.startNumber * this.endNumber;
+  }
+}
+
+// 除法类
+class createDivideCalculate extends Calculator {
+  divide() {
+    return this.startNumber / this.endNumber;
+  }
+}
+
+class CalculatorFactory {
+  static createCalculator(opt: ICalculatorOption) {
+    return new Claculator(opt)
+  },
+  static createAddCalculate() {
+    return new AddCalCulate();
+  },
+  static createMinusCalculate() {
+    return new MinusCalculate();
+  },
+  static createMultiplyCalculate() {
+    return new MultiplyCalculate();
+  },
+  static createDivideCalculate() {
+    return new DivideCalculate();
+  }
+}
+
+```
+
+使用
+``` ts
+const calculator = CalculatorFactory.createCalculator({
+  startNumber: 1,
+  operator: '+',
+  endNumber: 2
+});
+
+calculator.calculate();
 ```
