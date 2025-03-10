@@ -20,9 +20,27 @@ export default defineConfig({
       {
         text: '薅牛毛前',
         items: [
-          { text: '你不知道的Javascript', items: [
+          { text: '计算机基础', items: [
             {
-              text: '重学Javascript',
+              text: '浏览器工作原理',
+              link: '/pages/base/computer/browser'
+            },
+            {
+              text: '计算机网络',
+              link: '/pages/base/computer/network'
+            },
+            {
+              text: '设计模式',
+              link: '/pages/base/computer/design-principles'
+            },
+            {
+              text: '数据结构与算法',
+              link: '/pages/base/computer/algorithm'
+            },
+          ] },
+          { text: 'Javascript', items: [
+            {
+              text: 'Js基础',
               link: '/pages/base/js/js-deep'
             },
             {
@@ -30,34 +48,96 @@ export default defineConfig({
               link: '/pages/base/js/clone-obj'
             },
             {
-              text: '数组遍历',
+              text: 'Reduce原理',
               link: '/pages/base/js/arr-traversal'
+            },
+            {
+              text: 'Promise原理',
+              link: '/pages/base/js/promise'
+            },
+            {
+              text: '正则表达式',
+              link: '/pages/base/js/regexp'
             }
           ] },
-          { text: '代码整洁之道', items: [
-            {
-              text: '设计模式',
-              link: '/pages/base/code/design-principles'
-            },
-          ] },
           { text: 'NodeJs', items: [
+            {
+              text: '深入浅出Node',
+              link: '/pages/base/node/base'
+            },
             {
               text: 'MiniExpress',
               link: '/pages/base/node/mini-express'
             },
           ] },
-          { text: 'Css世界', link: '/pages/base/css/index' },
           { text: 'Vue及周边', items: [
             {
               text: 'Vue设计原理',
-              link: '/pages/base/vue/index'
+              link: '/pages/base/vue/vue'
             },
             {
               text: 'Pinia实现原理',
               link: '/pages/base/vue/pinia'
+            },
+            {
+              text: 'VueRouter原理',
+              link: '/pages/base/vue/router'
             }
           ] },
-          { text: 'React原理', link: '/pages/base/react/index' }
+          { text: 'React及周边', 
+            items: [
+              {
+                text: 'React Hooks',
+                link: '/pages/base/react/hooks'
+              },
+            ]
+           },
+          {
+            text: '架构设计',
+            items: [
+              {
+                text: 'Webpack',
+                link: '/pages/base/framework/webpack'
+              },
+              {
+                text: '工程化',
+                link: '/pages/base/framework/project'
+              },
+              {
+                text: 'Docker',
+                link: '/pages/base/framework/docker'
+              },
+              {
+                text: 'Monorepo',
+                link: '/pages/base/framework/monorepo'
+              },
+              {
+                text: '发布Npm包',
+                link: '/pages/base/framework/npm-package'
+              },
+              {
+                text: 'Git基操',
+                link: '/pages/base/framework/git'
+              },
+              {
+                text: '性能优化',
+                link: '/pages/base/framework/performance'
+              }
+            ]
+          },
+          {
+            text: '拓展',
+            items: [
+             {
+              text: '大文件上传',
+              link: '/pages/base/specific/upload'
+             },
+             {
+              text: 'Topic',
+              link: '/pages/base/specific/topic'
+             }
+            ]
+          }
         ]
       }
     ],

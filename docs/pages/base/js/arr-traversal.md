@@ -1,4 +1,4 @@
-# 数组遍历方法
+# Reduce原理及实现
 
 ## Reduce / ReduceRight
 

@@ -522,3 +522,257 @@ const calculator = CalculatorFactory.createCalculator({
 
 calculator.calculate();
 ```
+
+## 策略模式
+
+### if/else 优化一
+
+``` js
+
+/**
+ * 设计模式---策略模式
+ * 1. 优化if
+*/
+// 优化if--1
+
+(function () {
+    function computed (num) {
+        if (num === 90) {
+            return 'A'
+        } else if ( num === 80 ) {
+            return 'B'
+        } else if (num === 70) {
+            return 'C'
+        } else if (num === 60) {
+            return 'D'
+        } else if (num === 50) {
+            return 'E'
+        } else if (num === 40) {
+            return 'F'
+        } else if (num === 30) {
+            return 'G'
+        } else if (num === 20) {
+            return 'H'
+        } else if (num === 10) {
+            return 'I'
+        } else if (num === 0) {
+            return 'J'
+        }
+    }
+
+    console.log (computed (40))
+
+    const count = {
+        90: 'A',
+        80: 'B',
+        70: 'C',
+        60: 'D',
+        50: 'E',
+        40: 'F',
+        30: 'G',
+        20: 'H',
+        10: 'I',
+        0: 'J'
+    }
+
+    function computedNum (num) {
+        return count[num];
+    }
+
+    console.log (computedNum(40))
+
+    
+})();
+
+// 优化if---2表单提交
+
+(function () {
+    const oSubmit = ducoment.getElementById('#btn');
+    oSubmit.addEventListener('click', submitForm, false);
+    function submitForm () {
+        if (userName == ''){
+            console.log ('用户名不能为空');
+            return;
+        }
+
+        if (userName.length > 6) {
+            console.log ('用户名的长度不能大于6位');
+            return;
+        }
+
+        if (passWord == '') {
+            console.log ('密码不能为空');
+            return;
+        }
+
+        if (passWord.length > 6) {
+            console.log ('密码的长度不能大于6位')
+            return;
+        }
+
+        console.log ('登录成功');
+    }
+
+    // 提取优化对象
+    const loginForm = {
+        notEmpty (val, errMsg) {
+            if (val === '') {
+                return errMsg;
+            } else {
+                return val;
+            }
+        },
+        sureLen (val, len, errMsg) {
+            if (val.length > len) {
+                return errMsg;
+            } else {
+                return val;
+            }
+        }
+    }
+
+})();
+
+```
+
+### if/else 优化二
+
+``` js 
+
+/**
+ * 策略模式 --> 表单验证
+ * */
+import EventBus from './publish';
+
+const oUser = document.getElementById('username'),
+	oPass = document.getElementById('password'),
+	oMobile = document.getElementById('mobile'),
+	oSubmit = document.getElementById('submit');
+
+const strategies = {
+	isEmpty: function (val, errMsg) {
+		if (val === '') {
+			return errMsg;
+		}
+		return val
+	},
+	minLength: function (val, len, errMsg) {
+		if (val.length < len) {
+			return errMsg;
+		}
+		return val;
+	},
+	mobileFormat: function (val, errMsg) {
+		if (!/(^1[3|5|8][0-9]{9}$)/.test(val)) {
+			return errMsg;
+		}
+		return val;
+	}
+}
+
+class Validetor extends EventBus {
+	constructor() {
+		super();
+		this.cache = [];
+	}
+
+	add(dom, rules) {
+		rules.forEach((rule) => {
+			const { strategie, errMsg } = rule;
+			const strategyArr = strategie.split(':');
+			/** 
+			没有使用发布订阅之前
+			this.cache.push(function () {
+				const strategy = strategyArr.shift();
+				strategyArr.unshift(dom.value)
+				strategyArr.push(errMsg)
+				return strategies[strategy].apply(dom, strategyArr);
+			})
+			*/
+			// 使用发布订阅模式
+			const strategy = strategyArr.shift();
+			this.describe(strategy, () => {
+				strategyArr.unshift(dom.value)
+				strategyArr.push(errMsg)
+				return strategies[strategy].apply(dom, strategyArr);
+			});
+		})
+	}
+
+	start() {
+		/**
+		 * 没有使用发布订阅模式
+		*/
+		//return this.cache.map(item => item())
+		// 使用发布订阅模式
+		return Object.keys(strategies).reduce((acc, key) => {
+			acc.push({ [key]: this.publish(key) })
+			return acc;
+		}, [])
+	}
+}
+
+// 每次提交重新给一个校验器
+const ValidetorFunc = () => {
+	const valid = new Validetor();
+	valid.add(oUser, [
+		{ strategie: 'isEmpty', errMsg: '用户名不能为空' },
+		{ strategie: 'minLength:6', errMsg: '用户名长度不能小于6' }
+	]);
+	valid.add(oPass, [
+		{ strategie: 'minLength:6', errMsg: '密码长度不能小于6' }
+	]);
+	valid.add(oMobile, [
+		{ strategie: 'mobileFormat', errMsg: '手机号不合法' },
+	]);
+	return valid.start();
+}
+
+oSubmit.addEventListener('click', function (e) {
+	e.preventDefault();
+	const res = ValidetorFunc();
+	console.log(res, 10);
+}, false)
+
+```
+
+## 发布订阅模式
+
+``` js
+
+/**
+ * 设计模式
+ * 发布订阅模式
+*/
+
+class EventBus {
+    constructor () {
+        this.clientList = {};
+    }
+
+    describe (key, callback) {
+        (!this.clientList[key]) && (this.clientList[key] = []);
+        this.clientList[key].push(callback);
+    }
+
+    publish () {
+        const key = Array.prototype.shift.call(arguments),
+              callbacks = this.clientList[key];
+        let res;
+        for (let i = 0; i < callbacks.length; i++) {
+            res = callbacks[i].apply(this, arguments);
+        }
+        return res;
+    }
+}
+
+export default EventBus;
+
+```
+
+
+
+
+
+
+

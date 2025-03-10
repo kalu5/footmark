@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- <div id="btn">点我吧！</div> -->
+  <script>
+    // console.log(1)
+    // document.body.style.background = 'red';
+
+    // Promise.resolve().then(() => {
+    //   console.log(2)
+    //   document.body.style.background = 'green'
+    // })
+
+    // setTimeout(() => {
+    //   console.log(3)
+    //   document.body.style.background = 'yellow'
+    // }, 1000)
+
+    // console.log(4)
+
+
+
+    // console.log(1)
+
+    // new Promise((resolve) => {
+    //   console.log(2)
+    //   setTimeout(() => {
+    //     console.log(3)
+    //   })
+    //   resolve(4)
+    // }).then(res => {
+    //   console.log(res)
+    // })
+
+    // setTimeout(() => {
+    //   console.log(5)
+    //   new Promise((resolve) => {
+    //     console.log(6)
+    //     resolve()
+    //   }).then(() => {
+    //     console.log(7)
+    //   })
+    // })
+
+    // console.log(8)
+
+    // console.log(1)
+    // let res = function () {
+    //   console.log(2)
+    //   new Promise((resolve) => {
+    //     console.log(3)
+    //     setTimeout(() => {
+    //       console.log(20)
+    //       new Promise((resolve) => {
+    //         resolve()
+    //       }).then(() => {
+    //         console.log(4)
+    //       })
+    //     })
+    //     resolve(5)
+    //   })
+    // }
+
+    // async function test1() {
+    //   /**
+    //    * 下面的代码等同于
+    //    * let res2 = res().then(res => {
+    //    *   console.log(6)
+    //    * })
+    //   */
+    //   let res2 = await res()
+    //   console.log(6)
+    // }
+
+    // test1()
+
+    // new Promise((resolve, reject) => {
+    //   console.log(7)
+    //   setTimeout(() => {
+    //     console.log(8)
+    //   })
+    //   reject(9)
+    // }).then(() => {
+    //   console.log(10)
+    // }, (err) => {
+    //   console.log(err)
+    // })
+
+    // setTimeout(() => {
+    //   console.log(11)
+    // })
+
+    // setTimeout(() => {
+    //   console.log(12)
+    // }, 100)
+
+    // console.log(13)
+
+
+    // const oBtn = document.getElementById('btn')
+    // oBtn.addEventListener('click', function () {
+    //   console.log(1)
+    //   new Promise((resolve) => {
+    //     resolve()
+    //   }).then(() => {
+    //     console.log('m1')
+    //   })
+    // })
+    // oBtn.addEventListener('click', function () {
+    //   console.log(2)
+    //   new Promise((resolve) => {
+    //     resolve()
+    //   }).then(() => {
+    //     console.log('m2')
+    //   })
+    // })
+    // oBtn.click();
+
+
+    console.log('start')
+    const interval = setInterval(() => {
+      console.log('setInterval')
+    });
+    setTimeout(() => {
+      console.log('setTimeout 1')
+      Promise.resolve()
+        .then(() => {
+          console.log('promise 3')
+        })
+        .then(() => {
+          console.log('promise 4')
+        })
+        .then(() => {
+          setTimeout(() => {
+            console.log('setTimeout 2')
+            Promise.resolve()
+              .then(() => {
+                console.log('promise 5')
+              })
+              .then(() => {
+                console.log('promise 6')
+              })
+              .then(() => {
+                clearInterval(interval)
+              })
+          })
+        })
+    })
+
+    Promise.resolve()
+      .then(() => {
+        console.log('promise 1')
+      })
+      .then(() => {
+        console.log('promise 2')
+      })
+
+
+    // async function async1() {
+    //   console.log('a1 start')
+    //   /**
+    //    * async2().then(() => {
+    //    *   console.log ('a1 end')
+    //    * })
+    //   */
+    //   await async2();
+    //   console.log('a1 end')
+    // }
+
+    // async function async2() {
+    //   console.log('async2')
+    // }
+
+    // console.log('script start')
+    // setTimeout(function () {
+    //   console.log('setTimeout')
+    // }, 0)
+    // async1()
+    // new Promise((resolve) => {
+    //   console.log('promise1')
+    //   resolve()
+    // })
+    //   .then(() => {
+    //     console.log('promise2')
+    //   })
+    // console.log('script end')
+  </script>
+</body>
+
+</html>
