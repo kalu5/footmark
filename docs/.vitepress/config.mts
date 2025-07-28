@@ -94,6 +94,10 @@ export default defineConfig({
                 text: "VueRouter原理",
                 link: "/pages/base/vue/router",
               },
+              {
+                text: 'Element Plus Form表单封装',
+                link: '/pages/base/vue/element-plus-form'
+              }
             ],
           },
           {
