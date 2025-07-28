@@ -156,7 +156,7 @@ export default defineConfig({
             ],
           },
           {
-            text: "Engilish",
+            text: "English",
             items: [
               {
                 text: "Base Vocabulary",
