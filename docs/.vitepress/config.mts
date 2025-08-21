@@ -146,6 +146,10 @@ export default defineConfig({
             text: "拓展",
             items: [
               {
+                text: '可视化大屏开发技术方案设计',
+                link: '/pages/base/specific/big-screen'
+              },
+              {
                 text: "大文件上传",
                 link: "/pages/base/specific/upload",
               },
