@@ -3,9 +3,9 @@
 layout: home
 
 hero:
-  name: "Yak shaving"
+  name: "Yak Shaving"
   text: "薅牛毛"
-  tagline: 薅牛毛，“Yak shaving”，是由麻省理工博士Carlin Vieri最早在90年代提出的一个编程术语。指的是：要做一件事A，就得先做B，要做B就得先做C，要做C得先做D。后被用来嘲讽“把简单的事情复杂化，忙了一圈，发现做了一堆与一开始要做的A毫不相干的事”。
+  tagline: 薅牛毛，“Yak Shaving”，是由麻省理工博士Carlin Vieri最早在90年代提出的一个编程术语；指的是：要做一件事A，就得先做B，要做B就得先做C，要做C得先做D；后被用来嘲讽“把简单的事情复杂化，忙了一圈，发现做了一堆与一开始要做的A毫不相干的事“；最终却也什么都没有完成；但反之，在这过程中，我们可以更好地发现现有项目的痛点，而着手改进。我想这也是初入开源最好的源动力。
   actions:
     - theme: brand
       text: 合理利用薅牛毛 ! 

@@ -3,7 +3,7 @@ import { defineConfig } from "vitepress";
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "kalu5",
-  description: "Yak shaving",
+  description: "Yak Shaving",
   head: [
     ["link", { rel: "icon", type: "image/png", href: "/footmark/l.png" }],
     ["meta", { name: "theme-color", content: "#5f67ee" }],
@@ -12,13 +12,12 @@ export default defineConfig({
     logo: { src: "/j.png", width: 24, height: 24 },
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: "薅牛毛", link: "/" },
-      { text: "薅牛毛前", link: "/pages/base/index" },
+      { text: "学习记录", link: "/pages/base/index" },
     ],
 
     sidebar: [
       {
-        text: "薅牛毛前",
+        text: "学习记录",
         items: [
           {
             text: "计算机基础",
