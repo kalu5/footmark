@@ -149,6 +149,10 @@ export default defineConfig({
                 link: '/pages/base/specific/big-screen'
               },
               {
+                text: '小程序开发技术方案设计',
+                link: '/pages/base/specific/mini-program'
+              },
+              {
                 text: "大文件上传",
                 link: "/pages/base/specific/upload",
               },
