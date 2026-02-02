@@ -153,6 +153,10 @@ export default defineConfig({
                 link: '/pages/base/specific/mini-program'
               },
               {
+                text: 'h5开发技术方案设计',
+                link: '/pages/base/specific/h5'
+              },
+              {
                 text: "大文件上传",
                 link: "/pages/base/specific/upload",
               },
