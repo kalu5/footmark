@@ -139,6 +139,10 @@ export default defineConfig({
                 text: "性能优化",
                 link: "/pages/base/framework/performance",
               },
+              {
+                text: "Commitlint",
+                link: "/pages/base/framework/commitlint",
+              }
             ],
           },
           {
