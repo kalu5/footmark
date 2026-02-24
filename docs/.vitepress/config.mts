@@ -161,6 +161,10 @@ export default defineConfig({
                 link: '/pages/base/specific/h5'
               },
               {
+                text: '金额相关工具',
+                link: '/pages/base/specific/money',
+              },
+              {
                 text: "大文件上传",
                 link: "/pages/base/specific/upload",
               },
