@@ -165,6 +165,10 @@ export default defineConfig({
                 link: '/pages/base/specific/money',
               },
               {
+                text: 'Websocket',
+                link: '/pages/base/specific/websocket'
+              },
+              {
                 text: "大文件上传",
                 link: "/pages/base/specific/upload",
               },
