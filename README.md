@@ -1,5 +1,20 @@
-# 耗牛地图
+# Code log
 
-## 耗牛地图前置
+Is it better to do programming with AI or manually? This is a good question.
 
-夯实基础并寻找开源契机 
+## Frontend
+
+js / vue / react / node 
+
+## Backend
+
+python / mysql
+
+## AI
+
+Prompt / Skill / LLM / RAG / Agent
+
+
+
+
+
