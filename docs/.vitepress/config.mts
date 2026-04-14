@@ -202,6 +202,10 @@ export default defineConfig({
               text: "Python",
               link: "/pages/backend/python/index",
             },
+            {
+              text: 'MySQL',
+              link: "/pages/backend/mysql/index"
+            }
           ],
           link: "/pages/backend/index",
         },
