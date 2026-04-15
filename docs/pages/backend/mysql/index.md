@@ -176,6 +176,192 @@ create table user(
 #### DQL
 数据查询语言，用来查询数据库中表的记录
 
+语法： `select 字段列表 from 表名 where 条件列表 group by 分组字段列表 having 分组后条件列表 order by 排序字段列表 limit 分页参数;`
+
+**执行顺序**
+from 表名   ->   where 条件列表   ->   group by 分组字段列表   ->  having 分组后条件列表  -> select 字段列表  -> order by 排序字段列表   ->   limit 分页参数
+
+##### 基本查询
+
+1. 查询多个字段
+`select 字段1,字段2... from 表名;`
+`select * from 表名;`
+
+例子:
+- 查询指定字段
+`select name,workno,age from emp;`
+- 查询所有字段
+`select name,workno,age,id,gender from emp;`
+不建议用*
+`select * from emp;`
+
+2. 设置别名
+`select 字段1 [as 别名1],字段2 [as 别名2],... from 表名;`
+
+例子：
+- 查询所有员工的工作地址起别名
+`select workaddress as '地址' from emp;`
+`select workaddress '地址' from emp;`
+
+3. 去重重复记录
+`select distinct 字段列表 from 表名;`
+
+例子：
+- 查询员工的工作地址不重复
+`select distinct workaddress '地址' from emp;`
+
+##### 条件查询
+
+语法：`select 字段列表 from 表名 where 条件列表;`
+
+**条件**
+
+|  比较运算  |    功能   |
+| ----------- | ----------|
+|     >           |               |
+|     <           |               |
+|     >=          |               |
+|     <=          |               |
+|     =           |               |
+|     <> 或 !=   |   不等于  |
+|  between ... and ...         |   在某个范围之内含最小和最大值            |
+|     in(...)          |      在in之后的列表中的值，多选一    |
+|     link  占位符        |      模糊匹配（_： 匹配单个字符，%： 匹配任意个字符）         |
+|     is null          |    是null         |
+
+
+|  逻辑运算  |    功能   |
+| ----------- | ----------|
+|     and 或 &&           |     并且          |
+|     or  或 ||            |      或者         |
+|     not 或 ！         |         非 /不是     |
+
+
+例子：
+- 查询年龄等于18的员工
+`select * from emp where age = 18;`
+
+- 查询年龄小于18的员工
+`select * from emp where age <= 18`
+
+- 查询有身份证号的员工
+`select * from emp where idcard is not null`
+
+- 查询没有身份证号的员工
+`select * from emp where idcard is null`
+
+- 查询年龄不等于18的员工
+`select * from emp where age != 18;`
+`select * from emp where age <> 18;`
+
+- 查询年龄[15-20]的员工
+`select * from emp where age >= 15 && age <= 20;`
+`select * from emp where age >= 15 and age <= 20;`
+
+`select * from emp where  age between  15 and 20;`
+
+
+- 查询年龄19或25的员工
+`select * from emp where age = 19 || age = 25;`
+`select * from emp where age = 19 or age = 25;`
+
+`select * from emp where age in(19,25);`
+
+- 查询姓名为2个字的员工
+`select * from emp where name link '--';`
+
+- 查询身份证最后一个是X的员工
+`select * from emp where idcard link '%X';`
+
+
+##### 聚合函数
+
+将一列数据作为一个整体，进行纵向运算
+
+语法：`select 聚合函数(字段列表) from 表名;`
+
+**注意** null不参与所有聚合函数运算
+
+|   函数   |    功能       |
+| ------    |  ------       |
+|   count   |  统计数量   |
+|   max   |  最大值   |
+|   min   |  最小值   |
+|   avg   |  平均值   |
+|   sum   |  求和   |
+
+例子：
+
+- 统计该企业的员工数量
+`select count(*) from emp;`
+
+- 统计该企业的员工平均年龄
+`select avg(age) from emp;`
+
+- 统计该企业的员工最小年龄
+`select min(age) from emp;`
+
+- 统计西安地区员工之和
+`select sum(age) from emp where address = ‘西安’;`
+
+
+##### 分组查询
+
+语法： `select 字段列表 from 表名 [where 条件] group by 分组字段名 [having 分组后的过滤条件];`
+
+**where与having区别**
+1. 执行时机不同：where分组之前过滤，having分组之后过滤
+2. 判断条件不同：where不能对聚合函数进行判断 having可以
+
+**注意：**
+1. 执行顺序： where > 聚合函数 > having
+2. 分组之后，查询的字段一般为聚合函数和分组字段，查询其他字段无意义
+
+例子：
+
+- 根据性别分组统计男生和女生的数量
+`select gender count(*) from emp group by gender;`
+
+- 查询年龄小于45的员工， 并根据工作地址分组，获取员工数量大于等于3的工作地址
+`select workaddress count(*) as address_count from emp where age < 45 group by workaddress having address_count >= 3;`
+
+
+##### 排序查询
+
+语法： `select 字段列表 from 表名 order by 字段1 排序方式, 字段2 排序方式...;`
+
+排序方式： 升序asc, 降序 desc
+
+**注意：**
+如果是多个字段，当前一个字段相同时，才会根据第二个字段排序
+
+例子：
+
+- 根据年龄升序排序，年龄相同按入职时间降序
+`select * from emp order by age asc, entrydate desc;`
+
+##### 分页查询
+
+语法：`select 字段列表 from 表名 limit 起始索引,查询记录数;`
+
+**注意：**
+1. 起始索引从0开始，等于 （查询页码 - 1）* 每页显示记录数
+2. 分页查询是数据库语言，不同数据库不同，mysql为limit
+3. 如果查询的是第一页，索引可以省略，简写limit 10
+
+例子：
+
+- 查询第一页，每页展示10条
+`select * from emp limit 10;`
+
+- 查询第二页，每页展示10条
+`select * from emp limit 10,10;`
+
+
+##### 案例
+
+- 统计员工信息表中，年龄小于60岁的男女员工的人数
+`select gender count(*) from emp age < 60 group by gender;`
 
 #### DCL
 数据控制语言，用来创建数据库用户、控制数据库的访问权限
