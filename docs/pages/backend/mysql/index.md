@@ -366,6 +366,74 @@ from 表名   ->   where 条件列表   ->   group by 分组字段列表   ->  h
 #### DCL
 数据控制语言，用来创建数据库用户、控制数据库的访问权限
 
+##### 基础管理
+
+1. 查询用户
+`use mysql;`
+`select * from user;`
+
+2. 创建用户
+`create user '用户名'@‘主机名’ identified by '密码';`
+- 创建user test只能在当前主机localhost访问
+`create user 'test'@'localhost' identified by '123456';`
+
+- 创建user test可以在任意主机访问该数据库
+`create user 'test'@'%' identified by '123456';`
+
+3. 修改用户密码
+`alter user '用户名'@‘主机名’ identified with mysql_native_password by '新密码';`
+
+`alter user 'test'@'%' identified with mysql_native_password by '111111';`
+
+4. 删除用户
+`drop user '用户名'@‘主机名’ ;`
+
+`drop user 'test'@'%';`
+
+**注意：**
+1. 主机名可以使用通配符%
+2. 主要是数据库管理员使用
+
+##### 权限控制
+
+**权限列表：**
+
+| 权限 |  说明 |
+|------| -------|
+| all / all privileges |  所有权限 |
+| select |  查询数据 |
+| insert |  插入数据 |
+| update |  更新数据 |
+| delete |  删除数据 |
+| alter |  修改表 |
+| drop |  删除数据库/表/视图 |
+| create |  创建数据库/表 |
+
+**权限控制：**
+
+1. 查询
+`show grants for '用户名'@‘主机名’ ;`
+
+2. 授予
+`grant 权限列表 on 数据库名.表名 to '用户名'@‘主机名’ ;`
+
+`grant all on test.* to 'test'@'%';`
+
+3. 撤销
+`revoke 权限列表 on 数据库名.表名 from '用户名'@‘主机名’ ;`
+
+**注意：**
+
+1. 多个权限之间，使用逗号隔开
+2. 授权时，数据库名和表名可以使用*代表所有
+
+
+
+
+
+
+
+
 
 
 
