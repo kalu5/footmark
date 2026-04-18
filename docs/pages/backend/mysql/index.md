@@ -30,7 +30,7 @@
 
 ## SQL
 
-### 通用语法：
+通用语法：
 1. SQL语句可以单行或多行，用分号结束；
 2. SQL语句可以使用空格或缩进来增强语句的可读性；
 3. MySQL语句不区分大小写，关键字建议大写；
@@ -38,12 +38,12 @@
    - 单行 # 或 --
    - 多行/*注释*/
 
-### SQL分类
+## SQL分类
 
-#### DDL
+### DDL
 数据定义语言，用来定义数据库对象（数据库、表、字段）
 
-##### 数据库操作：
+#### 数据库操作：
 1. 查询
 - 查询所有数据库
 `show databases;`
@@ -59,7 +59,7 @@
 4. 使用
 `use 数据库名;`
 
-##### 表操作
+#### 表操作
 1. 查询
 - 查询数据库所有表
 `show tables;`
@@ -143,10 +143,10 @@ create table user(
 |timestamp|4|时间戳|
 
 
-#### DML
+### DML
 数据操作语言，用来对数据库表中的数据进行增删改查
 
-##### 添加数据insert
+#### 添加数据insert
 
 - 插入数据时，指定的字段顺序需要和值一样
 - 字符串和日期数据应该包含在引号中
@@ -160,20 +160,20 @@ create table user(
 `insert into 表名 (字段1,字段2,....) values (值1,值2,.....),(值1,值2,.....);`
 `insert into 表名 values (值1,值2,.....),(值1,值2,.....);`
 
-##### 修改数据update
+#### 修改数据update
 `update 表名 set 字段1=值1,字段2=值2,... [where 条件];`
 `update user set name='test' where id=1;`
 `update user set name='test1',age=18 where id=1;`
 `update user set entrydate='2026-01';`
 
-##### 删除数据delete
+#### 删除数据delete
 没有条件删除整张表
 不能删除某一个字段的值，使用update
 `delete from 表名 [where 条件];`
 删除gender为女的员工
 `delete form user gender='女';`
 
-#### DQL
+### DQL
 数据查询语言，用来查询数据库中表的记录
 
 语法： `select 字段列表 from 表名 where 条件列表 group by 分组字段列表 having 分组后条件列表 order by 排序字段列表 limit 分页参数;`
@@ -181,7 +181,7 @@ create table user(
 **执行顺序**
 from 表名   ->   where 条件列表   ->   group by 分组字段列表   ->  having 分组后条件列表  -> select 字段列表  -> order by 排序字段列表   ->   limit 分页参数
 
-##### 基本查询
+#### 基本查询
 
 1. 查询多个字段
 `select 字段1,字段2... from 表名;`
@@ -210,7 +210,7 @@ from 表名   ->   where 条件列表   ->   group by 分组字段列表   ->  h
 - 查询员工的工作地址不重复
 `select distinct workaddress '地址' from emp;`
 
-##### 条件查询
+#### 条件查询
 
 语法：`select 字段列表 from 表名 where 条件列表;`
 
@@ -274,7 +274,7 @@ from 表名   ->   where 条件列表   ->   group by 分组字段列表   ->  h
 `select * from emp where idcard link '%X';`
 
 
-##### 聚合函数
+#### 聚合函数
 
 将一列数据作为一个整体，进行纵向运算
 
@@ -305,7 +305,7 @@ from 表名   ->   where 条件列表   ->   group by 分组字段列表   ->  h
 `select sum(age) from emp where address = ‘西安’;`
 
 
-##### 分组查询
+#### 分组查询
 
 语法： `select 字段列表 from 表名 [where 条件] group by 分组字段名 [having 分组后的过滤条件];`
 
@@ -326,7 +326,7 @@ from 表名   ->   where 条件列表   ->   group by 分组字段列表   ->  h
 `select workaddress count(*) as address_count from emp where age < 45 group by workaddress having address_count >= 3;`
 
 
-##### 排序查询
+#### 排序查询
 
 语法： `select 字段列表 from 表名 order by 字段1 排序方式, 字段2 排序方式...;`
 
@@ -340,7 +340,7 @@ from 表名   ->   where 条件列表   ->   group by 分组字段列表   ->  h
 - 根据年龄升序排序，年龄相同按入职时间降序
 `select * from emp order by age asc, entrydate desc;`
 
-##### 分页查询
+#### 分页查询
 
 语法：`select 字段列表 from 表名 limit 起始索引,查询记录数;`
 
@@ -358,15 +358,15 @@ from 表名   ->   where 条件列表   ->   group by 分组字段列表   ->  h
 `select * from emp limit 10,10;`
 
 
-##### 案例
+#### 案例
 
 - 统计员工信息表中，年龄小于60岁的男女员工的人数
 `select gender count(*) from emp age < 60 group by gender;`
 
-#### DCL
+### DCL
 数据控制语言，用来创建数据库用户、控制数据库的访问权限
 
-##### 基础管理
+#### 基础管理
 
 1. 查询用户
 `use mysql;`
@@ -394,7 +394,7 @@ from 表名   ->   where 条件列表   ->   group by 分组字段列表   ->  h
 1. 主机名可以使用通配符%
 2. 主要是数据库管理员使用
 
-##### 权限控制
+#### 权限控制
 
 **权限列表：**
 
@@ -428,10 +428,98 @@ from 表名   ->   where 条件列表   ->   group by 分组字段列表   ->  h
 2. 授权时，数据库名和表名可以使用*代表所有
 
 
+## 函数
+
+一段可以直接被另一段函数调用的程序/代码
+
+### 字符串函数
+
+- 常见函数
+
+|  函数  |   功能    |
+| -------| --------  |
+| concat(s1,s2,....sn) | 字符串拼接，将s1...sn拼接成一个字符串 |
+| lower(str)             |  将字符串str全部转为小写 |  
+| upper(str)             |  将字符串str全部转为大写 |  
+| lpad(str,n,pad)             |  用字符串pad对str的左边进行填充，达到n个字符串长度 |  
+| rpad(str,n,pad)             |  用字符串pad对str的右边进行填充，达到n个字符串长度 |  
+| trim(str)             |  去掉字符串头部和尾部的空格 |  
+| substring(str,start,len)             |  返回从字符串str从start位置起的len个长度的字符串 |  
 
 
+- 基本语法
+
+`select concat('hello', 'test');`
+
+`select upper('hello');`
+
+`select lpad('01', 5 '-');`
+
+`select trim(' test ')`
+
+`select substring('hello', 1, 2);`
 
 
+- 例子
+更新员工编号为5为不足补0
+`update emp set workno = lpad(workno, 5, '0')`
+
+### 数值函数
+
+- 常见函数
+
+|  函数  |   功能    |
+| -------| --------  |
+|  ceil(x) |  向上取整 |
+|  floor(x) |  向下取整 |
+|  mod(x/y) |  返回x/y的模 |
+|  rand() |  返回0-1内的随机数 |
+|  round(x，y) |  求参数x的四舍五入的值，保留y位小数 |
+
+- 例子
+通过数据库函数，生成一个六位数的随机验证码
+`select lpad(round(rand() * 1000000, 0), 6 '0')`
+
+### 日期函数
+
+- 常见函数
+
+|  函数  |   功能    |
+| -------| --------  |
+| curdate() |  返回当前日期 |
+| curtime() |  返回当前时间 |
+| now() |  返回当前日期和时间 |
+| year(date) |  返回指定date的年份 |
+| month(date) |  返回指定date的月份 |
+| day(date) |  返回指定date的日期 |
+| date_add(date, interval expr type) |  返回一个日期/时间值加上一个时间间隔expr后的时间值 |
+| datediff(date1, date2) |  返回起始时间和结束时间之间的天数 |
+
+- 例子
+1. 当前时间加70年
+`select date_add(now(), interval 70 year);`
+
+2. 查询所有员工的入职天数并按照入职天数倒叙排序
+`select name, datediff(curdate(), antrydate) as 'antrydays' from emp order by entrydays desc;`
+
+### 流程函数
+
+- 常见函数
+
+|  函数  |   功能    |
+| -------| --------  |
+| if(value,t,f) |  如果value为true,则返回t,否则返回f |
+| ifnull(value1, value2) |  如果value1不为空,则返回value1,否则返回value2 |
+| case when [val1] then [res1] ... else [default] end |  如果value1为true,则返回res1,否则返回default默认值 |
+| case [expr] when [val1] then [res1] ... else [default] end |  如果expr等于val1,则返回res1,否则返回default默认值 |
+
+
+- 例子
+1. 查询emp表的员工姓名和工作地址（北京/上海）为一线，其他为二线
+`select name, (case workaddress when '北京' then '一线' when '上海' then '一线' else '二线' end) as '工作地址' from emp;`
+
+2. 统计班级各个学院的成绩，大于80优秀，大于60及格 否则不合格
+`select name (case when math >= 80 then ‘优秀’ when math >= 60 then '及格' else '不及格' end) as '数学' form student`
 
 
 
