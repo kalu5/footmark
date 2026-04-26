@@ -561,10 +561,10 @@ create table user(
 ``` sql
 create table emp (
   id int primary key auto_increment comment 'id',
-  constraint fk_emp_dept_id foreign key (dept_id) references dept(id)
+  constraint fk_emp_dept_id foreign key (dept_id) references dept (id)
 );
 ```
-`alter table emp add constraint fk_emp_dept_id foreign key (dept_id) references dept(id); `
+`alter table emp add constraint fk_emp_dept_id foreign key (dept_id) references dept (id); `
 
 2. 删除外键
 `alter table emp drop foreign key fk_emp_dept_id;`
@@ -579,9 +579,319 @@ create table emp (
 | SET NULL | 当父表中删除/更新对应记录时，首先检查该记录是否有对应的外键，如果有则设置子表中该外键为null (要求改外键允许为null)  |
 | SET DEFAULT | 父表有变更时，子表将外键列设置成一个默认的值（Innodb不支持）  |
 
-`alter table 表名 add constraint 外键名称 foreign key (外键字段) refernces 主表名(主表字段名) on update cascade on delete cascade;`
+`alter table 表名 add constraint 外键名称 foreign key (外键字段) refernces 主表名 (主表字段名) on update cascade on delete cascade;`
 
-`alter table emp add constraint fk_emp_dept_id foreign key(dept_id) refernces dept(id) on update set null on delete set null;`
+`alter table emp add constraint fk_emp_dept_id foreign key (dept_id) refernces dept (id) on update set null on delete set null;`
+
+
+## 多表查询
+
+### 多表关系
+
+- 概述
+项目开发中，在进行数据库表结构设计时，会根据业务需求及业务模块之间的关系，分析并设计表结构，由于业务之间相互关联，所以各个表结构之间也存在各种联系基本分3种
+- 一对多（多对一）
+    部门与员工：
+        关系： 一个部门对应多个员工，一个员工对应一个部门
+        实现：在多的一方建立外键，指向一的一方的主键
+                  员工表建立外键dept_id对应部门表主键id
+
+``` sql
+create table emp(
+  id int primary key auto_increment comment '主键id',
+  name varchar(10) comment '性别',
+  age int comment '年龄',
+  dept_id int comment '部门id',
+  constraint fk_dept_id foreign key (dept_id) refernces dept (id) 
+) comment '员工基本信息表';
+
+create table dept(
+  id int primary key auto_increment comment 'id',
+  name varchar(10) comment '部门',
+) comment '用户教育表';
+```
+
+- 多对多
+    学生 与课程的关系
+        关系：一个学生可以选多门课程，一门课程也可以供多个学生选择
+        实现：建立第三张中间表，中间表至少包含两个外键，分别关联两方主键
+                  学习课程关系表 student_id关联学生表主键id, course_id关联课程表的id
+
+``` sql
+create table student(
+  id int primary key auto_increment comment '主键id',
+  name varchar(10) comment '性别',
+  age int comment '年龄',
+) comment '学生基本信息表';
+
+create table course(
+  id int primary key auto_increment comment 'id',
+  name varchar(10) comment '课程名称',
+) comment '课程表';
+
+create table student_course(
+  id int primary key auto_increment comment 'id',
+  student_id int comment 'student id',
+  course_id int comment 'courser id',
+  constraint fk_s_id foreign key (student_id) references student (id),
+  constraint fk_c_id foreign key (course_id) references course (id)
+) comment '课程学生关联表';
+```
+
+- 一对一
+    用户与用户详情
+        关系： 一对一，多用于表拆分，将一张表的基础字段放在一张表中，其他详情字段放在另一张表中，以提升操作效率
+        实现：在任意一方添加外键，关联另一方的主键，并且设置外键为唯一的（UNIQUE）
+                  用户教育信息表添加一个外键user_id与用户基本信息表id关联
+``` sql
+create table user(
+  id int primary key auto_increment comment '主键id',
+  name varchar(10) comment '性别',
+  age int comment '年龄'
+) comment '用户基本信息表';
+
+create table user_edu(
+  id int primary key auto_increment comment 'id',
+  univerity varchar(50) comment '大学',
+  user_id int unique comment 'user id',
+  constraint fk_user_id foreign key (userid) references user (id)
+) comment '用户教育表';
+```
+
+
+### 多表查询概述、
+
+- 概念：从多个表中查询
+
+**注意：**
+
+需要使用条件过滤无效的笛卡尔积：
+
+`select * from emp, dept where emp.dept_id = dept.id;`
+
+
+- 分类
+
+1. 连接查询
+   - 内连接：查询A、B交集部分数据
+   - 外连接：
+       - 左外连接：查询左表所有数据，以及两张表的交集部分数据
+       - 右外连接：查询右表所有数据，以及两张表的交集部分数据
+   - 自连接：当前表与自身的连接查询，必须使用表别名
+
+2. 子查询
+
+### 内连接
+
+查询两张表交集的部分
+
+1. 隐式内连接
+`select 字段列表 form 表1,表2 where 条件;`
+
+2. 显式内连接
+`select 字段列表 from 表1 [inner] join 表2 on 连接条件;`
+
+查询每一个员工的姓名及关联的部门名称
+- 隐式内连接
+`select emp.name, dept.name from emp,dept where emp.dept_id = dept.id;`
+
+`select e.name, d.name from emp e,dept d where e.dept_id = d.id;`
+
+- 显示内连接
+`select e.name, d.name form emp e inner join dept d on e.dept_id = d.id; `
+
+### 外连接
+
+1. 左外连接
+`select 字段列表 from 表1 left [outer] join 表2 on 条件;`
+查询表1左表的所有数据包含表1和表2的交集部分的数据
+
+2. 右外连接
+`select 字段列表 from 表1 right [outer] join 表2 on 条件;`
+查询表2右表的所有数据包含表1和表2的交集部分数据
+
+查询emp表的所有数据和对应的部门信息
+- 左外
+`select e.*, d.* from emp e left outer join dept d on e.dept_id = d.id;`
+
+- 右外
+`select d.*, e.* from emp e right outer join dept d on e.dept_id = d.id;`
+右外改为左外
+`select d.*, e.* from dept d left outer join  on emp e e.dept_id = d.id;`
+
+### 自连接
+
+`select 字段列表 from 表1 别名1 join 表1 别名2 on 条件;`
+可以是内连接也可以是外连接
+
+查询员工及所属领导的名字(领导也是员工，员工表中通过managerid关联)
+`select e.name, e2.name from emp e, emp e2 where e.managerid = e2.id;`
+
+`select e.name as ‘员工姓名’, e2.name as ‘领导姓名’ from emp e left join emp e2 on e.managerid = e2.id;`
+
+
+### 联合查询 union union all
+
+对于union查询，就是把多次查询的结果合并起来，形成一个新的查询结果集
+
+``` sql
+select 字段列表 from 表a
+union [all]
+select 字段列表 from 表b
+```
+
+**注意：**
+1. 对于联合查询的多张表的列数必须保持一致，字段类型也需要保持一致
+2. union all 会将全部的数据直接合并在一起，union会对合并之后的数据去重
+
+**例子**
+将薪资低于5000的员工和年龄大于50岁的员工全部查询出来
+``` sql
+select * from emp where salary < 5000
+union
+select * from emp where age > 50;
+
+```
+
+### 子查询
+
+-  sql语句中嵌套select语句称为嵌套查询，又称子查询。
+`select * from t1 where column1 = (select column1 from t2);`
+
+子查询外部的语句可以是insert / update / delete / select任意一个
+
+- 根据子查询结果不同分为
+1. 标量子查询（子查询为单个值）
+2. 列子查询（子查询结果为一列）
+3. 行子查询（子查询结果为一行）
+4. 表子查询（子查询结果为多行多列）
+
+- 根据子查询位置，分为 where之后、from之后、select之后
+
+#### 标量子查询
+
+返回的结果是单个值（数字、字符串、日期等）
+
+- 常见操作符号 = 、<>  、   >   、 >=   、  <    、    <= 
+
+**例子**
+- 查询销售部所有员工的信息
+`select * from emp e where dept_id = (select id from dept where name = '销售部');`
+
+- 查询小明入职之后的员工
+`select * from emp where entrydate > (select entrydate from emp where name = '小明' );`
+
+
+#### 列子查询
+
+返回的结果是一列（可以是多行）
+
+- 常见操作符号 in (在指定的集合范围内，多选一)、 not in(不在指定的集合范围内) 、 any（子查询返回的列表中，有任意一个满足即可） 、 some（与any相同） 、 all（子查询返回的列表的所有值都必须满足）
+
+**例子**
+- 查询销售部和市场部所有员工的信息
+`select * from emp where dept_id in (select id from dept where name = '销售部' or name  = '市场部');`
+
+- 查询比财务部所有员工工资都高的员工
+`select * from emp where salary > all (select salary from emp where  dept_id = (select id from dept where name = '财务部'));`
+
+-  查询比研发部其中任意一个人工资高的员工
+`select * from emp where salay > any (select salary from emp where dept_id = (select id from dept where nam = '研发部'));`
+
+
+#### 行子查询
+
+返回的结果是一行（可以是多列）
+
+- 常见操作符 = 、<> 、in 、not in
+
+**例子**
+- 查询与小明的薪资及直属领导相同的员工信息
+`select * from emp where (salary, managerid) = (select salary, managerid from emp where name = '小明' ); `
+
+
+#### 表子查询
+
+返回的结果是一张表
+
+- 常见操作符 in
+
+**例子**
+- 查询与小明、小红的职位和薪资相同的员工
+`select * from emp where (job, salary) in (select job, salary from emp where name = ‘小明’ or name='小红');`
+
+- 查询入职日期是2026-01-01 之后的员工信息及其部门信息
+查询入职日期是2026-01-01 之后的员工
+`select * from emp where entrydate > '2026-01-01'`
+将上述查询的条件作为一张表
+`select * from (select * from emp where entrydate > '2026-01-01')  e left join dept d on e.dept_id = d.id`
+
+### 多表查询案例
+
+- 内连接
+1. 查询员工的姓名、年龄、部门信息
+`select e.name, e.age, d.name from emp e, dept d where e.dept_id = d.id;`
+
+2. 查询年龄小于30岁的员工姓名、年龄、部门
+`select e.name, e.age, d.name from emp e inner join dept d on e.dept_id = d.id where e.age < 30;`
+
+3. 查询拥有员工的部门id、部门名称
+查出来有重复的，需要加distinct去重
+`select distinct d.id, d.name from emp e, dept d where e.dept_id = d.id;`
+
+- 外连接
+4. 查询所有年龄大于40的员工，及其归属部门名称，如果员工没有分配部门也要展示
+`select e.*, d.name from emp  e left join dept d on e.dept_id = d.id where e.age > 40;`
+
+- 内连接
+5. 查询所有员工的工资等级
+连接条件： e.salary >= salgrade.losal and e.salary <= salgrade.hisal
+`select e.*, s.grade, s.losal, s.hisal from emp e , salgrade s where e.salary > = s.losal and e.salary <= s.hisal;`
+
+`select e.*, s.grade from emp e , salgrade s where e.salary between s.losal and s.hisal;`
+
+- 内连接
+
+6. 查询研发部所有员工的信息及工资等级
+关联n张表，连接条件为n-1
+表： emp 、salgrade 、dept
+连接条件： e.salary between s.losal and s.hisal， e.dept_id = dept.id
+查询条件：dept.name = ‘研发部’
+
+- 查询研发部所有员工的信息
+`select * from emp e , dept d where e.dept_id = (select id from dept where dept.name = '研发部');`
+- 查询研发部所有员工的信息及工资等级
+`select e.*, s.grade from emp e , dept d. salgrade s  where e.dept_id = d.id and (e.salary between s.losal and s.hisal) and d.name = '研发部';`
+
+7. 查询研发部员工的平均薪资
+`select avg(e.salary) from emp e , dept d where e.dept_id = d.id and d.name = '研发部';`
+
+- 子查询
+8. 查询工资比小明高的员工
+`select salary from emp where name = '小明';`
+
+`select *  from emp e where e.salary > (select salary from emp where name = '小明');`
+
+9. 查询比平均薪资高的员工
+`select avg(salary) from emp;`
+
+`select * from emp e where salary > (select avg(salary) from emp);`
+
+
+10. 查询低于本部门平均薪资的员工
+`select avg(e.salary) from emp e where e.dept_id = 1;`
+
+`select * from emp e1 where salary < (select avg(e.salary) from emp e where e.dept_id = e1.dept_id)`
+
+- select 之后可以出现子查询
+11. 查询所有的部门信息，并统计部门的员工人数
+`select d.id,d.name, (select count(*) from emp e where e.dept_id = d.id) '人数' from dept d;`
+
+12. 查询所有学生的选课情况，显示出学生名称、学号、课程名称
+表：student course student_course
+连接条件： s.id = sc.studentid, c.id = sc.courseid
+`select s.name, s.no, c.name from student s student_course sc, course c where s.id = sc.studentid and sc.courseid = c.id;`
+
 
 
 
