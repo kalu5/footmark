@@ -15,6 +15,7 @@ export default defineConfig({
       { text: "前端", link: "/pages/base/index" },
       { text: "后端", link: "/pages/backend/index" },
       { text: "AI", link: "/pages/ai/index" },
+      { text: "DevOps", link: "/pages/devops/index"}
     ],
 
     sidebar:  {
@@ -220,6 +221,18 @@ export default defineConfig({
             }
           ],
           link: '/pages/ai/index',
+        }
+      ],
+      '/pages/devops/':[
+        {
+          text: 'DevOps',
+          items: [
+            {
+              text: 'Linux',
+              link: '/pages/devops/linux'
+            }
+          ],
+          link: '/pages/devops/'
         }
       ]
     },
