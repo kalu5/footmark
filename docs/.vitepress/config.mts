@@ -217,6 +217,10 @@ export default defineConfig({
             {
               text: 'AI基础',
               link: '/pages/ai/base',
+            },
+            {
+              text: 'Agent',
+              link: '/pages/ai/agent',
             }
           ],
           link: '/pages/ai/index',
