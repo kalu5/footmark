@@ -222,6 +222,10 @@ export default defineConfig({
             {
               text: 'Agent',
               link: '/pages/ai/agent',
+            },
+            {
+              text: 'Spec',
+              link: '/pages/ai/spec',
             }
           ],
           link: '/pages/ai/index',
