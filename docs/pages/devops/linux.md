@@ -884,9 +884,80 @@ lsof是系统管理员在复杂环境下定位进程与资源关系的必备利�
   - 空间释放`grep delete `查找失效句柄
   - 卸载设备：解决`device is busy`报错
   - 资源清理：安全停止服务或`kill`进程
+
+## 系统日志
+
+- 运行轨迹：记录内核、服务与应用的生命周期
+- 传统痛点：日志分散各处、格式混乱，检索困难
+- 统一中枢：journalctl终结systemd时代的日志散乱
+
+- 服务器日志构成与分布
+  - 内核日志20%
+  - 系统服务50%
+  - 应用程序30%
+
+- journalctl工作原理
+  - 核心进程：systemd-journald统一收集内核、运行服务及用户空间日志
+  - 存储机制：采用二机制，非纯文本，检索与压缩效率更高
+  - 元数据优势：每条日志自动携带PID、UID、Service名及精确时间戳
+journalctl会自动管理日志大小限制与自动轮转，不用担心磁盘爆满
+
+- journalctl基础操作
+  - 全量查看与实时追踪(建议使用实时追踪)
+    - 全量查看（默认分页模式）`journalctl`
+    - 实时追踪（类似tail -f）`journalctl -f`
+    - 快速查看最近20条`journalctl -n 20`
+    - 直接输出到屏幕`journalctl --no-pager`
+  - 精准定位
+    - 按时间维度过滤
+      - 相对时间：`1 hour ago`, `yesterday`
+      - 绝对时间：`2026-08-08 09:00:00`
+      - 组合拳：同时使用`--since`与`--until`
+        - `--since "14:00" --until "14:30"`
+      - 语义化：`today, now, yesterday`
+  - 按服务单元过滤日志
+    - 核心参数-u
+      - 精准调取特定服务的监控录像
+      - `journalctl -u ssh.service`
+    - 多单元过滤
+      - 支持同时监控多个关联服务
+      - `journalctl -u sshd -u nginx`
+    - 排查建议：-u结合-f实时纠错
+      - 当服务无法启动时，首选方案`journalctl -u [unit] -f`
+      - 场景应用：实时定位SSH登录失败的具体原因
+
+  - 进阶过滤(`-p -err`排查错误日志)
+    - 按优先级过滤
+      - 快速过滤指定日志优先级`-p [level]`
+      - 常用级别level`err crit alert warning`
+    - 内核与启动日志
+      - 排查硬件驱动或网络协议故障`-k`
+      - 查看本次系统启动后的日志`-b`
+      - 回溯查看前一次启动记录`-b -1`
       
+- 日志输出控制与分析
+  - JSON格式输出`journalctl -o json-pretty`
+  - 重定向保存文件`journalctl > logs.txt`
+  - 结合Grep过滤`journalctl | grep "error"`
+  - 磁盘数据库分析`journalctl --disk-usage`
 
+- 实战案例
+  - 精准查询nginx今日报错日志
+    - `journalctl -u nginx.service -p err --since today`
+    - 核心排查链路
+      - 宏观负载：确认系统整体运行状态
+      - 锁定服务：-u定向采集目标单元日志
+      - 级别过滤：-p剥离无关的冗余信息
+      - 时间切片：精准捕获特定时间段故障
+    - 效率对比：相比便利/var/log下的海量文件，结构化索引查询速度提升10倍以上
+  - 查看上一次启动过程中，由内核产生的而且优先级为error（3）及以上（0-3）的所有记录
+    - `journalctl -k -p 3 -b-1`
+  - 提取nginx在2026-08-07 14:00到15:00间所有优先级高于Info（6）的日志（0-5）并以JSON格式输出
+    - `journalctl -u nginx.service --since '2026-08-07 14:00' --until '2026-08-07 15:00' -p 5 -o json`
+  - 在复杂的微服务架构中，一个服务频繁启动会产生不同的进程PID，为什么在这种场景下使用_SYSTEMD_UNIT字段比直接使用PID过滤更具有效性
+    - PID是内核动态分布的瞬时资源，一旦服务重启，旧的PID就是失效，仅靠PID是无法查询到该服务在重启前后的连续上下文，而_SYSTEMD_UNIT是由systemd自动维护的，它代表了服务定义本身，能够将服务名下的所有进程、重启历史以及不同的boot周期内的日志汇聚在一起，从而实现完整的生命周期审计
 
+- 总结：`-f`实时追踪 `-u`特定服务 `-p`优先级 `--since`收缩范围
 
 
 
