@@ -238,6 +238,10 @@ export default defineConfig({
             {
               text: 'Linux',
               link: '/pages/devops/linux'
+            },
+            {
+              text: 'Web Service',
+              link: '/pages/devops/web'
             }
           ],
           link: '/pages/devops/'
