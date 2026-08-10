@@ -287,7 +287,37 @@
     - `echo "" > /var/log/nginx/access.log`
     - `echo "" > /var/log/nginx/error.log`
 
-  
+- Java环境
+  - JDK：java development kit
+  - `dnf list | grep jdk`
+  - `dnf install java-17-openjdk -y`
+  - 查找jdk安装路径`alternative --list | grep java`
+  - 编辑环境变量配置文件 `vim /etc/profile`
+    - `export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-17.0.10.0.7-1.el9_4.x86_64/`
+    - 能查找到JAVA_HOME不需要配置PATH
+      - `which java`
+      - `export PATH=$JAVA_HOME/bin:$PATH`
+  - 确定安装成功
+    - `javac -version`
+    - `java -version`
+
+- Tomcat部署war包
+  - 默认端口8080
+  - 放行防火墙
+  - Tomcat是免费开源的Java Web服务器，基于JDK运行，主要用于部署和运行java web应用程序（后缀为.war包）-war包相当于压缩好的app安装包，部署tomcat后会自动解压并运行该程序
+  - 依赖jdk
+  - 到官网下载后上传到服务器
+  - 运行
+    - 进入执行文件`cd /usr/local/tomcat/bin`
+    - 执行启动`./startup.sh`
+    - 查看tomcat进行`ps -ef | grep tomcat`
+    - 停止`./shutdown.sh`(要在bin目录下)
+    - 重启：先停止再启动
+  - 部署war包：将war包上传到tomcat安装路径下的webapps下
+  - 删除部署的程序
+    - 停止tomcat
+    - 进入webapps删除test和test.war
+    - 重启tomcat
 
 
 
