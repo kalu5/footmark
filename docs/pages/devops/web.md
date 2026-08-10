@@ -319,6 +319,33 @@
     - 进入webapps删除test和test.war
     - 重启tomcat
 
+## FTP服务（File Transfer Protocol）
+
+FTP: 用于网络中传输文件的标准协议
+vsftpd: FTP服务程序用于搭建FTP服务
+
+FTP服务：从本地电脑连接到服务器，实现文件上传、文件下载、查看文件等操作
+
+- vsftpd
+  - 安装`dnf update -f` `dnf install vsftpd -y`
+  - 配置：
+    - 先备份原始文件`cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak`
+    - 执行自签名证书生成命令（创建FTPS所需证书）
+    - 修改配置
+  - 创建用户
+    - 创建`useradd -d /home/ftpuser ftpuser`
+      - `-d`指定用户家目录，禁止用户登录服务器系统，只能登录FTP更安全
+    - 设置用户密码`password ftpuser`
+    - 设置用户家目录权限（必做）`chown ftpuser:ftpuser /home/ftpuser`
+  - 基本操作
+    - 启动`systemctl start vsftpd`
+    - 停止`systemctl stop vsftpd`
+    - 查看状态`systemctl status vsftpd`
+    - 开机自启`systemctl enable vsftpd`
+  - 验证是否启动（安装FileZilla）
+  
+
+
 
 
 
