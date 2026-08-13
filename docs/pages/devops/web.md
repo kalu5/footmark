@@ -386,6 +386,62 @@ IP地址池可用范围192.168.1.100-200
 修改配置后需要重新启动
 
 
+## Samba 
+
+跨系统文件共享的服务（windows/linux/mac）
+
+用windows的网上邻居共享
+
+**核心逻辑**
+Linux服务器安装Samba -> 配置共享目录 -> 创建Samba用户 -> 启动Samba服务 -> Windows/其他设备通过网络访问共享目录 ——> 实现文件上传、下载、修改
+
+### 核心概念
+
+- Samba服务核心组件
+  - smbd: 负责处理文件共享、用户认证
+  - nmbd：负责解析NetBIOS名称（Windows主机名），让客户端通过主机找到Linux服务器
+
+- 共享目录：需配置权限
+
+- 创建Samba用户
+
+### 使用
+
+- 安装 `dnf install -y samba samba-common samba-client`
+
+- 创建Samba用户
+  - 先创建Linux系统用户(仅用于Samba访问)`useradd -s /sbin/nologin sambauser`
+  - 创建Samba用户（与Linux用户名相同）`smbpasswd -a sambauser`
+- 创建共享文件夹
+  - 创建目录`mkdir -p /home/samba/share`
+  - 设置所有者和所属组`chown -R sambauser:sambauser /home/samba/share`
+  - 设置目录权限`chmod -R 755 /home/samba/share`
+
+- 修改配置文件`/etc/samba/smb.conf`
+- 验证`testparm`
+- 启动`systemctl start smb nmb`
+
+- 查看状态`systemctl status smb nmb`
+
+- 停止`systemclt stop smb nmb`
+
+- Linux访问
+  - 连接`smbclient //localhost/share -U sambauser`
+  - 上传文件`put /ect/hosts`
+  - 退出`exit`
+
+- Windows访问
+确保同一个局域网
+
+1. Win+R 输入`\\Linux服务器IP`确认
+2. 弹出登录，输入账号和密码
+3. 操作共享目录
+
+  
+
+
+
+
   
 
 
