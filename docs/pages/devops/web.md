@@ -462,6 +462,66 @@ rsync是一款用于文件同步的工具，核心作用是将一个目录的文
   - 从其他服务器同步到当前服务器`rsync -av root@192.168.1.101:/home/rsync/target/ /home/rsync/source/ `
 
 
+## 网络安全
+
+### 弱口令
+- 核心定义：指容易被破解、猜测的账号密码
+- 修改密码`passwd`
+- 禁用系统默认空密码用户
+  - 查看`awk -F: '($2==""){print $1}' /etc/shadow`
+  - 禁用`passwd -l test`
+
+### 端口
+- 核心定义：服务器与外部通信的入口，每个端口对应不同的服务，端口开放越来越多，攻击入口越来越多
+
+- 查看开放的所有端口
+  - 方式1
+    - `dnf install -y net-tools`
+    - 查看所有监听端口`netstat -tulnp`
+  - 方式2`ss -tulnp`
+    - t: 查看TCP端口
+    - u：查看UDP端口
+    - l：查看监听状态的端口
+    - n：以数字形式显示端口和IP
+    - p：显示占用端口的进程
+
+- 高风险端口
+  - 3306:数据库
+  - 21: FTP
+  - 23: Telnet
+  - 135/139/445: windows共享
+  - 其他自定义高危端口
+
+- 关闭危险端口
+  - 查看21端口是否被占用`ss -tulnp | grep 21`
+  - 显示进程占用先停止该进程
+  - `systemctl stop vsftpd`
+  - `systemctl disabl vsftpd`
+  - 未被占用通过防火墙拦截
+  
+### 防火墙
+- 核心定义：服务器的安全大门，负责拦截恶意流量、管控端口开放，只允许合法流量进入服务器，是保障服务器和网站安全的核心工具
+
+- 核心逻辑：只开放必要端口（80、443、22）
+
+- 使用
+  - 验证并开启
+    - `systemctl status firewalld`
+    - `systemctl start firewalld`
+    - `systemctl enable firewalld`
+  - 放行必要端口
+    - `firewall-cmd --permanent --add-port=80/tcp`
+    - `firewall-cmd --permanent --add-port=443/tcp`
+    - `firewall-cmd --permanent --add-port=22/tcp`
+  - 关闭风险端口
+    - `firewall-cmd --permanent --remove-port=21/tcp`
+  - 重新加载`firewall-cmd --reload`
+  - 查看防火墙配置`firewall-cmd --list-all`
+  - 限制IP访问
+    - 删除开放规则`firewall-cmd --permanent --remove-port=22/tcp`
+    - 限制仅指定IP访问`firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="192.168.1.100/32" port protocol="tcp" port="22" accept'`
+
+
 
 
 
