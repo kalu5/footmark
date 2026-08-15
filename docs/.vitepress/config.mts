@@ -242,7 +242,11 @@ export default defineConfig({
             {
               text: 'Web Service',
               link: '/pages/devops/web'
-            }
+            },
+            {
+              text: 'Zabbix',
+              link: '/pages/devops/zabbix'
+            },
           ],
           link: '/pages/devops/'
         }
