@@ -247,6 +247,10 @@ export default defineConfig({
               text: 'Zabbix',
               link: '/pages/devops/zabbix'
             },
+            {
+              text: 'Docker',
+              link: '/pages/devops/docker'
+            },
           ],
           link: '/pages/devops/'
         }
