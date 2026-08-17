@@ -18,7 +18,7 @@
 
 - 对比
 |维度|容器|虚拟机|
-|--|--|--|
+|---|---|---|---|
 |底层|共享宿主机内核|拥有独立内核|
 |启动时间|秒级，快速部署|分钟级，开机缓慢，耗时长|
 |资源占用|占用内存、CPU极少（一台机器可跑上百个）|占用内存、CPU较多（数量受限）|
@@ -245,6 +245,178 @@ CMD ["nginx", "-g", "daemon off;"]
     - `--tail n`：显示最近n行日志，默认显示最近10行日志
     - `--since 时间`：显示指定时间之后的日志
     - `--until 时间`：显示指定时间之前的日志
+
+## Docker Compose
+
+- 定义：是Docker官方提供的多容器管理工具，无需手动逐个启动，配置多个容器（如Nginx、Mysql、Redis组合），只需通过一个YAML配置文件，定义所有容器的配置（镜像、端口映射、数据卷挂载、环境变量等），执行一条命令即可一键启动所有容器（docker-compose up -d）
+
+- 案例：搭建网站需要Nginx、Mysql、Redis3个容器，用docker-compose配置文件实现，一条命令启动所有容器，无需分别操作，简化多容器运维成本
+
+- 使用（先安装和启动docker）
+  - 安装docker-compose使用官方二进制文件安装
+    - 下载二进制文件（可自行下载上传到宿主机）
+    `sudo curl -L "https://github.com/docker/compose/releases/download/2.10.1/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose`
+    - 使二进制文件可执行,添加执行权限
+    `sudo chmod +x /usr/local/bin/docker-compose`
+    - 验证安装
+    `docker-compose version`
+  - 常用命令
+    - 启动所有容器：`docker-compose up -d`
+    - 查看所有容器状态：`docker-compose ps`
+    - 查看所有容器日志：`docker-compose logs -f`
+    - 停止所有容器：`docker-compose down`
+    - 删除所有容器：`docker-compose prune`
+
+- 配置文件编写（缩进2个空格，大小写敏感）
+先拉取镜像
+``` yaml
+services: # 定义所有容器的配置
+  nginx: # 定义Nginx容器的配置
+    image: nginx:latest # 拉取Nginx镜像，标签为latest
+    ports: # 映射主机端口到容器端口
+      - 80:80 # 映射主机端口80到容器端口80
+    restart: always # 容器重启策略，always表示容器在容器退出或被强制停止时，自动重启
+    container_name: nginx # 容器名称，可自定义，默认为镜像名称
+```
+启动
+
+- 一键启动LNMP环境（Nginx、Mysql、PHP）基础版
+  - 配置镜像加速
+  ```bash
+  cat > /etc/docker/daemon.json <<'eof'
+  {
+    "registry-mirrors": [
+      "https://docker.1ms.run",
+      "https://docker.1panel.live",
+      "https://docker.ketches.cn"
+    ]
+  }
+  eof
+  systemctl restart docker
+  ```
+  - 拉取Nginx镜像
+  `docker pull nginx:latest`
+  - 拉取Mysql镜像
+  `docker pull mysql:latest`
+  - 拉取PHP镜像
+  `docker pull php:latest`
+  - 编写docker-compose配置文件
+  ``` yaml
+  services: # 定义所有容器的配置
+    nginx: # 定义Nginx容器的配置
+      image: nginx:latest # 拉取Nginx镜像，标签为latest
+      ports: # 映射主机端口到容器端口
+        - 80:80 # 映射主机端口80到容器端口80
+      restart: always # 容器重启策略，always表示容器在容器退出或被强制停止时，自动重启
+      container_name: nginx # 容器名称，可自定义，默认为镜像名称
+      volumes: # 挂载主机目录到容器目录
+        - ./nginx/conf.d:/etc/nginx/conf.d # 挂载主机目录nginx/conf.d到容器目录/etc/nginx/conf.d，用于自定义Nginx配置文件
+      depends_on: # 容器依赖关系，nginx容器依赖php容器启动
+        - php
+    php: # 定义PHP容器的配置
+      image: php:latest # 拉取PHP镜像，标签为latest
+      ports: # 映射主机端口到容器端口
+        - 9000:9000 # 映射主机端口9000到容器端口9000
+      restart: always # 容器重启策略，always表示容器在容器退出或被强制停止时，自动重启
+      container_name: php # 容器名称，可自定义，默认为镜像名称
+      depends_on: # 容器依赖关系，php容器依赖mysql容器启动
+        - mysql
+      volumes: # 挂载主机目录到容器目录
+        - ./www:/var/www/html # 挂载主机目录www到容器目录/var/www/html，用于自定义PHP配置文件
+    mysql:
+      image: mysql:latest # 拉取Mysql镜像，标签为latest
+      ports: # 映射主机端口到容器端口
+        - 3306:3306 # 映射主机端口3306到容器端口3306
+      restart: always # 容器重启策略，always表示容器在容器退出或被强制停止时，自动重启
+      container_name: mysql # 容器名称，可自定义，默认为镜像名称
+      environment: # 环境变量配置
+        MYSQL_ROOT_PASSWORD: 123456 # 设置Mysql根密码为123456
+        MYSQL_DATABASE: footmark # 创建数据库footmark
+        TZ: Asia/Shanghai # 设置时区为东八区，避免时间差
+      volumes: # 挂载主机目录到容器目录
+        - ./mysql:/var/lib/mysql # 挂载主机目录mysql到容器目录/var/lib/mysql，用于自定义Mysql配置文件
+      command: --character-set-server=utf8mb4 # 设置Mysql字符集为utf8mb4，避免中文乱码
+  ```
+  - 配置主目录nginx.conf（配置PHP服务和前端服务）
+  - 启动
+  - 查看启动状态
+  - 查看日志
+
+## Docker镜像备份与加载
+
+方便多台服务器迁移
+
+- 备份
+  - 基础命令：`docker save -o /soft/images/nginx.tar nginx`
+    - 备份文件路径：`/soft/images/`
+    - 备份文件名：`nginx.tar`
+    - 备份的镜像：`nginx`镜像
+  - 多个备份
+    - 基础命令：`docker save -o /soft/images/nginx.tar nginx php mysql`
+    - 备份文件名：`nginx.tar`
+    - 备份的镜像：`nginx`镜像、`php`镜像、`mysql`镜像
+
+- 加载
+  - 基础命令：`docker load -i /soft/images/nginx.tar`
+    - 加载的镜像：`nginx`镜像
+  - 多个加载
+    - 基础命令：`docker load -i /soft/images/nginx.tar`
+    - 加载的镜像：`nginx`镜像、`php`镜像、`mysql`镜像
+
+- 其他主机使用，用scp/rsync命令传输镜像文件到其他主机，再加载镜像
+
+## Docker排错
+
+确认服务状态 -> 看日志 -> 查找问题 -> 解决问题
+
+- 基础排错命令
+  - 查看Docker服务状态：`systemctl status docker`
+  - 查看Docker服务日志：`journalctl -u docker`
+  - 查看Docker容器日志：`docker logs nginx`
+  - 查看Docker容器状态：`docker ps -a`
+  - 查看Docker镜像状态：`docker images`
+
+## Docker安全
+
+- 核心：最小权限、镜像可信（推荐自定义镜像）、容器隔离、日志可追溯
+
+- 限制docker服务权限
+  - 创建转用户组和用户：`groupadd docker && useradd -g docker /sbin/nologin dockeruser`
+  - 重启动服务：`systemctl restart docker`
+  - 授权用户：`usermod -aG docker dockeruser`
+    - 授权用户：`dockeruser`
+    - 授权用户组：`docker`用户组
+
+- 使用可信镜像
+优先拉取官方镜像
+
+- 容器安全加固
+  - 禁止使用宿主机PID、IPC（避免越权）
+  `docker run --pid=host --ipc=host nginx`
+  - 限制容器CPU、内存使用（防止容器耗尽主机资源）
+  `docker run --cpus=0 -m=100m nginx`
+    - 限制容器CPU核心数：`--cpus=0`
+    - 限制容器内存使用：`-m=100m`
+    - 启动用户：`dockeruser`用户组的用户
+  - 禁止以root用户启动容器
+  `docker run -u 1000 nginx`
+  - 禁止容器挂载宿主机敏感目录
+  `docker run -v /root:/root nginx`
+
+- 日志开启
+  - 配置路径：`/etc/docker/daemon.json`
+  - 配置内容：`{"log-driver":"json-file","log-opts":{"max-size":"100m","max-file":"10"}}}`
+    - 日志驱动：`json-file`
+    - 日志最大大小：`10m`
+    - 日志最大文件数：`10`
+  - 重启
+
+- 更新docker
+  - 基础命令：`dnf update -y docker-ci`
+
+
+
+
 
 
 
