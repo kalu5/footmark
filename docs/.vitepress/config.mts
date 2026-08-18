@@ -251,6 +251,10 @@ export default defineConfig({
               text: 'Docker',
               link: '/pages/devops/docker'
             },
+            {
+              text: 'K8s',
+              link: '/pages/devops/k8s'
+            },
           ],
           link: '/pages/devops/'
         }
